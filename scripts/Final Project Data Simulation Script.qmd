@@ -1,0 +1,103 @@
+---
+title: "Final Project Data"
+author: 'Andrew C'
+format: html
+editor: visual
+---
+
+```{r}
+library(rio)
+library(here)
+library(psych)
+```
+
+## Simulating the data
+
+```{r}
+set.seed(7)
+
+n_respondents <- 10000
+
+simulated_data <- data.frame(matrix(ncol = 100, nrow = n_respondents))
+colnames(simulated_data) <- paste0("item_", 1:100)
+
+# Loop to simulate factor1 25 times
+for (i in 1:25) {
+    # Simulate factor1
+    simulated_factor1 <- sample(1:5, n_respondents, replace = TRUE, prob = c(0.1, 0.2, 0.4, 0.2, 0.1)) #Mean closer to 3
+    simulated_data[,i] <- simulated_factor1
+}
+
+for (i in 1:25) {
+    # Simulate factor2
+    simulated_factor2 <- sample(1:5, n_respondents, replace = TRUE, prob = c(0.2, 0.3, 0.3, 0.1, 0.1)) #Mean closer to 2
+
+simulated_data[,i+25] <- simulated_factor2
+}
+
+for (i in 1:25) {
+    # Simulate factor3
+    simulated_factor3 <- sample(1:5, n_respondents, replace = TRUE, prob = c(0.1, 0.1, 0.2, 0.3, 0.3)) #Mean closer to 4
+    simulated_data[,i+50] <- simulated_factor3
+}
+
+for (i in 1:25) {
+    # Simulate factor4
+    simulated_factor4 <- sample(1:5, n_respondents, replace = TRUE, prob = c(0.25, 0.25, 0.2, 0.15, 0.15)) #Mean closer to 2.5
+    simulated_data[,i+75] <- simulated_factor4
+}
+
+gender <- sample(c("F", "M"), n_respondents, replace = TRUE, prob = c(0.66, 0.34)) #Simulating gender. 66% F/34% M as per the original sample.
+
+ages <- pmax(pmin(round(rnorm(n_respondents, mean = 30, sd = 14)), 99), 18) #Simulating skewed distribution with a mean around 30, sd of around 14 as per the original sample.
+
+race_categories <- c("White", "Black", "Asian", "Hispanic", "Other") #Simulating race similar to the original data
+race <- sample(race_categories, n_respondents, replace = TRUE, prob = c(0.7, 0.05, 0.1, 0.1, 0.05))
+
+countries <- c("USA", "Canada", "UK", "Germany", "Australia", "India", "China", "Brazil", "South Africa", "Japan") #Simulating location using a subset of countries (using all 200 is too taxing for this project)
+geographic_location <- sample(countries, n_respondents, replace = TRUE, prob = c(0.3, 0.1, 0.1, 0.05, 0.05, 0.1, 0.1, 0.1, 0.05, 0.05))
+
+participant_id <- sprintf("%05d", 1:n_respondents) #Giving each row a unique identifier
+
+#Making it harder on ourselves by including missing data (the real data has a lot of missingness)
+num_missing <- round(0.15 * n_respondents)
+
+#Function to introduce missing data into a column
+introduce_missing <- function(column) {
+    #Randomly select indices to be set as NA
+    missing_indices <- sample(1:n_respondents, num_missing, replace = FALSE)
+    column[missing_indices] <- NA
+    return(column)
+}
+
+#Here, we introduce 15% missingness into the data
+for(i in 1:100){
+  simulated_data[,i] <- introduce_missing(simulated_data[,i])
+}
+
+scale_data <- data.frame(participant_id, ages, factor(gender), factor(race), factor(geographic_location), simulated_data) #Consolidating everything into one set.
+
+#NOTE: In the scale data, item_1 through item_25 correspond to factor 1, and so on up to factor 4.
+
+colnames(scale_data)[1:5] <- c('participant_id', 'age', 'gender', 'race', 'country') #Cleaning up the names
+
+write.csv(scale_data, here(file_path <- here("data", "scale_data.csv"))) #Saving it to the data folder
+```
+
+## Properties of the data
+
+```{r}
+#Descriptives of the 100 items
+descScaleItems <- psych::describe(scale_data[,6:105])
+
+#Administrations of each
+administrations <- describe(descScaleItems$n)
+
+#Pairwise complete administrations
+pwiseAdminsScaleItems <- pairwiseCount(scale_data[,6:105], diagonal = TRUE)
+pwiseAdminsScaleItemsVec <- as.vector(pwiseAdminsScaleItems[lower.tri(pwiseAdminsScaleItems)])
+pwiseAdminsScaleItemsVecDescribe <- psych::describe(pwiseAdminsScaleItemsVec)
+pwiseAdminsScaleItemsVecDescribe
+n_obs <- pwiseAdminsScaleItemsVecDescribe$mean #Mean number of pairwise-complete administrations of all items
+
+```
