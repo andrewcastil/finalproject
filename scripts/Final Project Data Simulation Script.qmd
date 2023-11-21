@@ -9,6 +9,11 @@ editor: visual
 library(rio)
 library(here)
 library(psych)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(corrplot)
+library(glmnet)
 ```
 
 ## Simulating the data
@@ -100,4 +105,73 @@ pwiseAdminsScaleItemsVecDescribe <- psych::describe(pwiseAdminsScaleItemsVec)
 pwiseAdminsScaleItemsVecDescribe
 n_obs <- pwiseAdminsScaleItemsVecDescribe$mean #Mean number of pairwise-complete administrations of all items
 
+```
+
+## Tidying the data
+
+```{r}
+#handling NAs by replacing with the mean
+imp_scale <- makeX(scale_data, na.impute = TRUE, sparse = FALSE)
+imp_sim <- makeX(simulated_data, na.impute = TRUE, sparse = FALSE)
+
+#Kayla can so some more here with pivot functions
+```
+
+## Visualizing the data
+
+```{r}
+
+#doing a correlation matrix of all the items
+
+matrix <-cor(imp_sim, use="pairwise") 
+unlist(matrix)
+
+#making a correlatoin plot 
+corrplot(corr= matrix, method = "square")
+
+
+#Correlation matrix for each factor starting with factor 1
+
+matrix1 <-cor(imp_sim[,1:25], use="pairwise") 
+unlist(matrix)
+corrplot(corr= matrix1, method = "square")
+
+#Correlation matrix for factor 2
+matrix2 <-cor(imp_sim[,26:50], use="pairwise") 
+unlist(matrix)
+corrplot(corr= matrix2, method = "square")
+
+#Correlation matrix for factor 3
+matrix3 <-cor(imp_sim[,51:75], use="pairwise") 
+unlist(matrix)
+corrplot(corr= matrix3, method = "square")
+
+#Correlation matrix for factor 4
+matrix4 <-cor(imp_sim[,76:100], use="pairwise") 
+unlist(matrix)
+corrplot(corr= matrix4, method = "square")
+```
+
+```{r}
+#comparing age demographics for white and non-white races
+
+scale_data %>%
+filter(race == "White") %>%
+summarize(mean(age))
+
+scale_data %>%
+filter(race != "White") %>%
+summarize(mean(age))
+
+break_down<- scale_data %>%
+  group_by(gender, race, country) %>%
+  mutate(avg_age= mean(age))
+
+#visualizing demographics
+
+break_down %>%
+  ggplot(aes(avg_age, race))+
+  geom_col(aes(fill = gender), position = "dodge") +
+  facet_wrap(~country, ncol= 2) +
+  theme_minimal()
 ```
