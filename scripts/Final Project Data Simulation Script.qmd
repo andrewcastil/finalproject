@@ -1,6 +1,6 @@
 ---
 title: "Final Project Data"
-author: 'Andrew C'
+author: "Andrew, Ania, and Kayla"
 format: html
 editor: visual
 ---
@@ -14,6 +14,8 @@ library(tidyr)
 library(ggplot2)
 library(corrplot)
 library(glmnet)
+library(tidyverse)
+
 ```
 
 ## Simulating the data
@@ -87,6 +89,7 @@ scale_data <- data.frame(participant_id, ages, factor(gender), factor(race), fac
 colnames(scale_data)[1:5] <- c('participant_id', 'age', 'gender', 'race', 'country') #Cleaning up the names
 
 write.csv(scale_data, here(file_path <- here("data", "scale_data.csv"))) #Saving it to the data folder
+
 ```
 
 ## Properties of the data
@@ -105,16 +108,57 @@ pwiseAdminsScaleItemsVecDescribe <- psych::describe(pwiseAdminsScaleItemsVec)
 pwiseAdminsScaleItemsVecDescribe
 n_obs <- pwiseAdminsScaleItemsVecDescribe$mean #Mean number of pairwise-complete administrations of all items
 
+
 ```
 
 ## Tidying the data
 
 ```{r}
-#handling NAs by replacing with the mean
-imp_scale <- makeX(scale_data, na.impute = TRUE, sparse = FALSE)
+#Handling NAs by replacing with mean of column 
+
+for (i in 7:ncol(scale_data)) {
+  scale_data[[i]][is.na(scale_data[[i]])] <- mean(scale_data[[i]], na.rm = TRUE)
+}
 imp_sim <- makeX(simulated_data, na.impute = TRUE, sparse = FALSE)
 
-#Kayla can so some more here with pivot functions
+
+#creates version of data where each row is an individual score 
+
+scale_data_long <- pivot_longer(
+  data = scale_data,
+  cols = 6:105,
+  names_to = "item",
+  values_to = "score"
+)
+
+#creates version of data where each participant has 4 rows (one for each factor)
+
+scale_data_wide <- scale_data_long %>% 
+  mutate(item = parse_number(item)) %>% 
+  mutate(factor = case_when(
+    item <= 25 ~ 1,
+    item > 25 & item <= 50 ~ 2,
+    item > 50 & item <= 75 ~ 3,
+    item > 75 ~ 4)) %>% 
+  pivot_wider(
+    names_from = item,
+    values_from = score
+  )
+
+#creates separate dataframes for each factor 
+
+factor_1 <- scale_data %>% 
+  select(1:30)
+
+factor_2 <- scale_data %>% 
+  select(1:5, 31:55)
+
+factor_3 <- scale_data %>% 
+  select(1:5, 56:80)
+
+factor_4 <- scale_data %>% 
+  select(1:5, 81:105)
+
 ```
 
 ## Visualizing the data
@@ -126,7 +170,7 @@ imp_sim <- makeX(simulated_data, na.impute = TRUE, sparse = FALSE)
 matrix <-cor(imp_sim, use="pairwise") 
 unlist(matrix)
 
-#making a correlatoin plot 
+#making a correlation plot 
 corrplot(corr= matrix, method = "square")
 
 
@@ -150,6 +194,7 @@ corrplot(corr= matrix3, method = "square")
 matrix4 <-cor(imp_sim[,76:100], use="pairwise") 
 unlist(matrix)
 corrplot(corr= matrix4, method = "square")
+
 ```
 
 ```{r}
@@ -174,4 +219,27 @@ break_down %>%
   geom_col(aes(fill = gender), position = "dodge") +
   facet_wrap(~country, ncol= 2) +
   theme_minimal()
+```
+
+```{r}
+#visualizing mean responses for each factor 
+
+mean_scores <- scale_data_long %>% 
+  group_by(item) %>% 
+  summarize(mean = mean(score))
+
+mean_scores %>% 
+  mutate(item = parse_number(item)) %>% 
+  mutate(factor = case_when(
+    item <= 25 ~ "Anxiety",
+    item > 25 & item <= 50 ~ "Hopelessness",
+    item > 50 & item <= 75 ~ "Resentment",
+    item > 75 ~ "Shame")) %>% 
+  ggplot(aes(x = item, y = mean)) +
+  geom_col(fill= "blue1") +
+  labs(y = "Mean Response (1-5)",
+       x = "Item",
+       title = "Mean Responses to Items by Factor") +
+  facet_wrap(~factor) +
+  theme_minimal() 
 ```
