@@ -139,7 +139,9 @@ scale_data_wide <- scale_data_long %>%
     item <= 25 ~ 1,
     item > 25 & item <= 50 ~ 2,
     item > 50 & item <= 75 ~ 3,
-    item > 75 ~ 4)) %>% 
+    item > 75 ~ 4))%>%
+  mutate(item = ifelse(factor == 1, item, item - (factor - 1) * 25))%>%
+  #### I think you should add this code, so that you can avoid having missing data for factor 2-4.  
   pivot_wider(
     names_from = item,
     values_from = score
@@ -243,3 +245,22 @@ mean_scores %>%
   facet_wrap(~factor) +
   theme_minimal() 
 ```
+
+## Comments
+
+### Strengths
+
+1.  It is super helpful including comments for codes to explain why you wrote them and what your goals were!！
+2.  I like how you replaced missing data with means of variable values. I also expect your explanation of this in the final paper.
+3.  I like how you considered evaluating the correlation among variables. This is significantly important when we work on a real data and would like to explore relationships between different variables.
+4.  Great by considering to "create version of data where each participant has 4 rows (one for each factor)". I realized that in the new data set, all rows of factor 2-4 are blank, so I added one row of codes that might be helpful. Feel free to delete it if it's not what you expected.
+
+### Things I learned from you
+
+1.  I think your first code chunk can be a wonderful example of creating the simulated data. It is super clear and thoughtful that you introduced how to simulate samples of certain distributions and with missing data.
+
+### Areas of improvement
+
+1.  I would suggest working on YAML and code chunk settings to avoid showing warnings and messages, as well as making codes folded.
+2.  I would also suggest using labs() to improve the figure of demography, including meaningful axis names, a title, and legends.
+3.  I think for the last figure, you can put these four facets into one by setting "factor" as x to provide a clearer comparison.
