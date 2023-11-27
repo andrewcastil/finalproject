@@ -9,6 +9,8 @@ editor: visual
 library(rio)
 library(here)
 library(psych)
+library(dplyr)
+library(ggplot2)
 ```
 
 ## Simulating the data
@@ -101,3 +103,4 @@ pwiseAdminsScaleItemsVecDescribe
 n_obs <- pwiseAdminsScaleItemsVecDescribe$mean #Mean number of pairwise-complete administrations of all items
 
 ```
+
