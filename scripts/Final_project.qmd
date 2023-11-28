@@ -270,12 +270,12 @@ mean_scores %>%
 #factor analysis
 
 fa_result <- fa(imp_sim, nfactors = n_factors, rotate = "varimax")
-print(fa_result, cutoff = 0.3, sort = TRUE)
 
+#extracting loadings
 loadings <- as.data.frame(fa_result$loadings[, 1:n_factors])
 loadings$item <- rownames(loadings)
 
-#Sort items by their loadings on the first factor (you can choose any factor)
+#Sort items by their loadings on the first factor
 sorted_loadings <- loadings[order(-abs(loadings[,1])), ]
 sorted_items <- sorted_loadings$item
 
@@ -283,26 +283,30 @@ sorted_data <- imp_sim[, sorted_items]
 
 cor_matrix <- cor(sorted_data)
 
-# Convert to long format for ggplot2
-cor_melted <- melt(as.matrix(cor_matrix))
+reorderFA <- suppressMessages(suppressWarnings(fa(imp_sim, nfactors = 4)))
+reorderItems <- rownames(fa.sort(reorderFA$loadings))
+items <- reorderItems
 
-# Create the heatmap
-ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
-    geom_tile() +
-    scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0, limit = c(-1, 1)) +
-    theme_minimal() +
-    labs(x = "", y = "", title = "Heatmap of Sorted Correlations") +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
+redoneItems <- cor(imp_sim)[items,items]
 
 var_explained <- fa_result$Vaccounted
 cum_var_explained <- cumsum(var_explained[2,])
 
-# Plot
+factor_plot <- corrplot(redoneItems, method = "color", 
+         bg = "White", type = "full", title = "",
+         col = COL2('RdBu',200), 
+         tl.pos = 'n',
+         #addCoef.col = 'black', 
+         tl.cex = 1)
+```
+
+Lastly, we add a proportion of variance explained plot to show how well the factors account for the variance in the response data.
+
+```{r}
+#Plot
 ggplot(data.frame(Factor = 1:n_factors, CumulativeVariance = cum_var_explained), aes(x = Factor, y = CumulativeVariance)) +
     geom_line() + geom_point() +
-    labs(x = "Factor", y = "Cumulative Variance Explained")
-
+    labs(x = "Factor", y = "Cumulative Variance Explained", title = 'Proportion of Variance Explained during Factor Analysis')
 ```
 # Discussion
 
