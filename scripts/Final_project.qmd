@@ -43,6 +43,7 @@ suppressMessages(suppressWarnings(library(corrplot)))
 suppressMessages(suppressWarnings(library(glmnet)))
 suppressMessages(suppressWarnings(library(tidyverse)))
 suppressMessages(suppressWarnings(library(MASS)))
+suppressMessages(suppressWarnings(library(reshape2)))
 ```
 
 Data is simulated using a random sampling procedure. Four latent factors consisting of items rated 1 - 6 are produced using the sample() function and stored into a dataframe.
@@ -149,8 +150,8 @@ imp_sim <- data.frame(makeX(scale_data[,6:105], na.impute = TRUE, sparse = FALSE
 #creates version of data where each row is an individual score 
 
 scale_data_long <- pivot_longer(
-  data = scale_data,
-  cols = 6:105,
+  data = imp_sim,
+  cols = 1:100,
   names_to = "item",
   values_to = "score"
 )
@@ -265,6 +266,44 @@ mean_scores %>%
   theme_minimal() 
 ```
 
+```{r}
+#factor analysis
+
+fa_result <- fa(imp_sim, nfactors = n_factors, rotate = "varimax")
+print(fa_result, cutoff = 0.3, sort = TRUE)
+
+loadings <- as.data.frame(fa_result$loadings[, 1:n_factors])
+loadings$item <- rownames(loadings)
+
+#Sort items by their loadings on the first factor (you can choose any factor)
+sorted_loadings <- loadings[order(-abs(loadings[,1])), ]
+sorted_items <- sorted_loadings$item
+
+sorted_data <- imp_sim[, sorted_items]
+
+cor_matrix <- cor(sorted_data)
+
+# Convert to long format for ggplot2
+cor_melted <- melt(as.matrix(cor_matrix))
+
+# Create the heatmap
+ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
+    geom_tile() +
+    scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0, limit = c(-1, 1)) +
+    theme_minimal() +
+    labs(x = "", y = "", title = "Heatmap of Sorted Correlations") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+var_explained <- fa_result$Vaccounted
+cum_var_explained <- cumsum(var_explained[2,])
+
+# Plot
+ggplot(data.frame(Factor = 1:n_factors, CumulativeVariance = cum_var_explained), aes(x = Factor, y = CumulativeVariance)) +
+    geom_line() + geom_point() +
+    labs(x = "Factor", y = "Cumulative Variance Explained")
+
+```
 # Discussion
 
 In this study, we observed meaningful patterns of associations between the pool of imagination items administered, substantiating the hypothesis that imagination can prove maladaptive in various contexts and that it can be quantified in a four-factor structure. Imaginative emotional valence emerged as strongly associated with the PID-5, suggesting a clinically significant (Zimmermann et al., 2019; Miller et al., 2022) link between imagination and affective psychopathology. Similarly, the Frequency dimension mirrored the patterns observed in Emotional Valence but with slightly reduced effect sizes (see Table 4) and additionally correlated with traits indicative of cognitive biases and perceptual dysregulation. These associations point to the potential of excessive engagement in imagination in contributing to thought disorders (Andrews-Hanna & Grilli, 2021), indicating imaginative frequency is of clinical significance. These findings reinforce the clinical relevance of imaginative frequency. Directedness showed modest associations with pathological traits, while Complexity's significant null associations with most PID-5 facets reveal a complex, perhaps less direct, relationship with personality pathology, warranting further investigation.
