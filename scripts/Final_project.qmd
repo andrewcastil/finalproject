@@ -78,7 +78,7 @@ colnames(data) <- paste("Item", 1:n_items, sep = "")
 #Scale the data to 1-5 range
 simulated_data <- as.data.frame(lapply(data, function(x) round(4 * (x - min(x)) / (max(x) - min(x)) + 1, 0)))
 
-
+#I'd put a bar chart to show this because of this
 gender <- sample(c("F", "M"), n_respondents, replace = TRUE, prob = c(0.66, 0.34)) #Simulating gender. 66% F/34% M as per the original sample.
 
 ages <- pmax(pmin(round(rnorm(n_respondents, mean = 30, sd = 14)), 99), 18) #Simulating skewed distribution with a mean around 30, sd of around 14 as per the original sample.
@@ -86,6 +86,7 @@ ages <- pmax(pmin(round(rnorm(n_respondents, mean = 30, sd = 14)), 99), 18) #Sim
 race_categories <- c("White", "Black", "Asian", "Hispanic", "Other") #Simulating race similar to the original data
 race <- sample(race_categories, n_respondents, replace = TRUE, prob = c(0.7, 0.05, 0.1, 0.1, 0.05))
 
+#A bar chart would look good here!
 countries <- c("USA", "Canada", "UK", "Germany", "Australia", "India", "China", "Brazil", "South Africa", "Japan") #Simulating location using a subset of countries (using all 200 is too taxing for this project)
 geographic_location <- sample(countries, n_respondents, replace = TRUE, prob = c(0.3, 0.1, 0.1, 0.05, 0.05, 0.1, 0.1, 0.1, 0.05, 0.05))
 
@@ -104,13 +105,14 @@ introduce_missing <- function(column) {
 
 #Here, we introduce 15% missingness into the data
 for(i in 1:100){
-  simulated_data[,i] <- introduce_missing(simulated_data[,i])
+  simulated_data[,i] <- introduce_missing(simulated_data[,i]
 }
 
 scale_data <- data.frame(participant_id, ages, factor(gender), factor(race), factor(geographic_location), simulated_data) #Consolidating everything into one set.
 
 #NOTE: In the scale data, item_1 through item_25 correspond to factor 1, and so on up to factor 4.
 
+#I would do pivot_wider
 colnames(scale_data)[1:5] <- c('participant_id', 'age', 'gender', 'race', 'country') #Cleaning up the names
 
 write.csv(scale_data, here(file_path <- here("data", "scale_data.csv"))) #Saving it to the data folder
@@ -307,6 +309,7 @@ ggplot(data.frame(Factor = 1:n_factors, CumulativeVariance = cum_var_explained),
     geom_line() + geom_point() +
     labs(x = "Factor", y = "Cumulative Variance Explained", title = 'Proportion of Variance Explained during Factor Analysis')
 ```
+
 # Discussion
 
 In this study, we observed meaningful patterns of associations between the pool of imagination items administered, substantiating the hypothesis that imagination can prove maladaptive in various contexts and that it can be quantified in a four-factor structure. Imaginative emotional valence emerged as strongly associated with the PID-5, suggesting a clinically significant (Zimmermann et al., 2019; Miller et al., 2022) link between imagination and affective psychopathology. Similarly, the Frequency dimension mirrored the patterns observed in Emotional Valence but with slightly reduced effect sizes (see Table 4) and additionally correlated with traits indicative of cognitive biases and perceptual dysregulation. These associations point to the potential of excessive engagement in imagination in contributing to thought disorders (Andrews-Hanna & Grilli, 2021), indicating imaginative frequency is of clinical significance. These findings reinforce the clinical relevance of imaginative frequency. Directedness showed modest associations with pathological traits, while Complexity's significant null associations with most PID-5 facets reveal a complex, perhaps less direct, relationship with personality pathology, warranting further investigation.
