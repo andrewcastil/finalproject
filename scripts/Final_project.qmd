@@ -49,14 +49,13 @@ suppressMessages(suppressWarnings(library(reshape2)))
 Data is simulated using a random sampling procedure. Four latent factors consisting of items rated 1 - 6 are produced using the sample() function and stored into a dataframe.
 
 ```{r}
-set.seed(7)
-
+set.seed(1234)
 
 #Set parameters
 n_items = 100   
-n_respondents = 300   
+n_respondents = 10000   
 n_factors = 4 
-noise_sd = 0.5  #Adding some noise to make this more realistic
+noise_sd = 0.2 #Adding some noise to make this more realistic
 
 #Generate a covariance matrix
 factor_loadings = matrix(runif(n_items * n_factors), ncol = n_factors)
