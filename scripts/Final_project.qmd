@@ -3,6 +3,9 @@ title: "Final_project"
 format: html
 editor: visual
 echo: false
+code-fold: true
+warning: false
+error: false
 authors: 'Andrew Castillo, Ania Grudzien, Kayla McComb'
 bibliography: ../data/references.bib
 ---
@@ -44,6 +47,8 @@ suppressMessages(suppressWarnings(library(glmnet)))
 suppressMessages(suppressWarnings(library(tidyverse)))
 suppressMessages(suppressWarnings(library(MASS)))
 suppressMessages(suppressWarnings(library(reshape2)))
+suppressMessages(suppressWarnings(library(knitr)))
+
 ```
 
 Data is simulated using a random sampling procedure. Four latent factors consisting of items rated 1 - 6 are produced using the sample() function and stored into a dataframe.
@@ -132,9 +137,14 @@ administrations <- describe(descScaleItems$n)
 pwiseAdminsScaleItems <- pairwiseCount(scale_data[,6:105], diagonal = TRUE)
 pwiseAdminsScaleItemsVec <- as.vector(pwiseAdminsScaleItems[lower.tri(pwiseAdminsScaleItems)])
 pwiseAdminsScaleItemsVecDescribe <- psych::describe(pwiseAdminsScaleItemsVec)
-pwiseAdminsScaleItemsVecDescribe
 n_obs <- pwiseAdminsScaleItemsVecDescribe$mean #Mean number of pairwise-complete administrations of all items
 
+#descriptive table 
+descScaleItems %>% kable(
+  caption = "Descriptive Statistics of 100 Items", 
+  col.names = c("Item", "Number of Observations", "Mean Response", "Standard Deviation", "Median Response", "Trimmed Mean Response", "Median Absolute Deviation", "Minimum", "Maximum", "Range", "Skew", "Kurtosis", "Standard Error" ),
+  digits = 4
+)
 
 ```
 
@@ -194,27 +204,25 @@ heatmap(matrix, Rowv = NA, Colv = NA)
 #making a correlation plot 
 corrplot(corr= matrix, method = "square")
 
-
 #Correlation matrix for each factor starting with factor 1
-
 matrix1 <-cor(imp_sim[,1:25], use="pairwise") 
 head(unlist(matrix)[,1:5], 10)
-corrplot(corr= matrix1, method = "square")
+corrplot(corr= matrix1, method = "square", title = "Correlation Matrix for Anxiety")
 
 #Correlation matrix for factor 2
 matrix2 <-cor(imp_sim[,26:50], use="pairwise") 
 head(unlist(matrix)[,1:5], 10)
-corrplot(corr= matrix2, method = "square")
+corrplot(corr= matrix2, method = "square", title = "Correlation Matrix for Hopelessness")
 
 #Correlation matrix for factor 3
 matrix3 <-cor(imp_sim[,51:75], use="pairwise") 
 head(unlist(matrix)[,1:5], 10)
-corrplot(corr= matrix3, method = "square")
+corrplot(corr= matrix3, method = "square", title = "Correlation Matrix for Resentment")
 
 #Correlation matrix for factor 4
 matrix4 <-cor(imp_sim[,76:100], use="pairwise") 
 head(unlist(matrix)[,1:5], 10)
-corrplot(corr= matrix4, method = "square")
+corrplot(corr= matrix4, method = "square", title = "Correlation Matrix for Shame")
 
 ```
 
@@ -239,7 +247,13 @@ break_down %>%
   ggplot(aes(avg_age, race))+
   geom_col(aes(fill = gender), position = "dodge") +
   facet_wrap(~country, ncol= 2) +
-  theme_minimal()
+  theme_minimal() +
+  labs(
+    title = "Average Age by Race and Country",
+    x = "Average Age",
+    y = "Race",
+    fill = "Gender"
+  )
 ```
 
 ```{r}
@@ -307,6 +321,7 @@ ggplot(data.frame(Factor = 1:n_factors, CumulativeVariance = cum_var_explained),
     geom_line() + geom_point() +
     labs(x = "Factor", y = "Cumulative Variance Explained", title = 'Proportion of Variance Explained during Factor Analysis')
 ```
+
 # Discussion
 
 In this study, we observed meaningful patterns of associations between the pool of imagination items administered, substantiating the hypothesis that imagination can prove maladaptive in various contexts and that it can be quantified in a four-factor structure. Imaginative emotional valence emerged as strongly associated with the PID-5, suggesting a clinically significant (Zimmermann et al., 2019; Miller et al., 2022) link between imagination and affective psychopathology. Similarly, the Frequency dimension mirrored the patterns observed in Emotional Valence but with slightly reduced effect sizes (see Table 4) and additionally correlated with traits indicative of cognitive biases and perceptual dysregulation. These associations point to the potential of excessive engagement in imagination in contributing to thought disorders (Andrews-Hanna & Grilli, 2021), indicating imaginative frequency is of clinical significance. These findings reinforce the clinical relevance of imaginative frequency. Directedness showed modest associations with pathological traits, while Complexity's significant null associations with most PID-5 facets reveal a complex, perhaps less direct, relationship with personality pathology, warranting further investigation.

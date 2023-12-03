@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -105,18 +105,1653 @@ div.csl-indent {
 </section>
 <section id="methods" class="level1">
 <h1>Methods</h1>
-<p>To prepare our data for analysis, we will need to simulate it. This will be achieved using rnorm() and round(). The four factors will be simulated separately in “blocks” of 25 items each and merged together. These blocks will have different, randomly selected means and standard deviations in order to allow the factor analysis to locate the desired clusters of items from each of the factors. A spattering of NAs will also be introduced using something like this: sample(1:n, 0.15<em>nrow(data)</em>ncol(data), replace = T) paired with a for loop. This will introduce some amount of missingness (in this case, 15%) to make the data more realistic and add a bit of intrigue and decision making around handling the missing data. After this, the data will be ready for analysis including imputation, removal of missing data, partitioning into holdouts, and more. In this stage, we will use mutate() and other tidyverse() functions per the project requirements.</p>
+<p>To prepare our data for analysis, we will need to simulate it. This will be achieved using rnorm() and round(). The four factors will be simulated separately in “blocks” of 25 items each and merged together. These blocks will have different, randomly selected means and standard deviations in order to allow the factor analysis to locate the desired clusters of items from each of the factors. A spattering of NAs will also be introduced using something like this: sample(1:n, 0.15nrow(data)ncol(data), replace = T) paired with a for loop. This will introduce some amount of missingness (in this case, 15%) to make the data more realistic and add a bit of intrigue and decision making around handling the missing data. After this, the data will be ready for analysis including imputation, removal of missing data, partitioning into holdouts, and more. In this stage, we will use mutate() and other tidyverse() functions per the project requirements.</p>
 <p>Data is simulated using a random sampling procedure. Four latent factors consisting of items rated 1 - 6 are produced using the sample() function and stored into a dataframe.</p>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
 <p>We found four factors of imagination emerge from our analyses. Data is visualized below. (more info)</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>   vars    n    mean    sd median trimmed   mad  min  max range skew kurtosis
-X1    1 4950 7224.92 12.74   7225 7224.87 13.34 7183 7274    91 0.04    -0.09
-     se
-X1 0.18</code></pre>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Descriptive Statistics of 100 Items</caption>
+<colgroup>
+<col style="width: 4%">
+<col style="width: 2%">
+<col style="width: 12%">
+<col style="width: 7%">
+<col style="width: 10%">
+<col style="width: 8%">
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Item</th>
+<th style="text-align: right;">Number of Observations</th>
+<th style="text-align: right;">Mean Response</th>
+<th style="text-align: right;">Standard Deviation</th>
+<th style="text-align: right;">Median Response</th>
+<th style="text-align: right;">Trimmed Mean Response</th>
+<th style="text-align: right;">Median Absolute Deviation</th>
+<th style="text-align: right;">Minimum</th>
+<th style="text-align: right;">Maximum</th>
+<th style="text-align: right;">Range</th>
+<th style="text-align: right;">Skew</th>
+<th style="text-align: right;">Kurtosis</th>
+<th style="text-align: right;">Standard Error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Item1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9301</td>
+<td style="text-align: right;">0.6075</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9154</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0249</td>
+<td style="text-align: right;">0.0378</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9734</td>
+<td style="text-align: right;">0.6047</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9678</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0106</td>
+<td style="text-align: right;">0.2434</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0312</td>
+<td style="text-align: right;">0.5720</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0382</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0218</td>
+<td style="text-align: right;">0.3458</td>
+<td style="text-align: right;">0.0062</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0813</td>
+<td style="text-align: right;">0.6085</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0985</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0235</td>
+<td style="text-align: right;">0.0922</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9278</td>
+<td style="text-align: right;">0.5965</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9131</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0519</td>
+<td style="text-align: right;">0.1734</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item6</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1066</td>
+<td style="text-align: right;">0.6023</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1287</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0515</td>
+<td style="text-align: right;">0.1855</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0916</td>
+<td style="text-align: right;">0.6325</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1107</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0029</td>
+<td style="text-align: right;">0.0451</td>
+<td style="text-align: right;">0.0069</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item8</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9527</td>
+<td style="text-align: right;">0.6285</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9437</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0184</td>
+<td style="text-align: right;">0.0582</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item9</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0732</td>
+<td style="text-align: right;">0.5894</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0887</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0486</td>
+<td style="text-align: right;">0.3556</td>
+<td style="text-align: right;">0.0064</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item10</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1541</td>
+<td style="text-align: right;">0.5655</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1785</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0847</td>
+<td style="text-align: right;">0.2018</td>
+<td style="text-align: right;">0.0061</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item11</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0311</td>
+<td style="text-align: right;">0.5941</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0381</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0080</td>
+<td style="text-align: right;">0.2192</td>
+<td style="text-align: right;">0.0064</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item12</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9838</td>
+<td style="text-align: right;">0.5875</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9806</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0180</td>
+<td style="text-align: right;">0.2240</td>
+<td style="text-align: right;">0.0064</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item13</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0006</td>
+<td style="text-align: right;">0.6060</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0004</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0061</td>
+<td style="text-align: right;">0.2253</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item14</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9334</td>
+<td style="text-align: right;">0.5684</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9185</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0556</td>
+<td style="text-align: right;">0.2986</td>
+<td style="text-align: right;">0.0062</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item15</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0214</td>
+<td style="text-align: right;">0.6305</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0265</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0108</td>
+<td style="text-align: right;">0.0671</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item16</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0713</td>
+<td style="text-align: right;">0.6258</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0860</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0081</td>
+<td style="text-align: right;">0.1209</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item17</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9809</td>
+<td style="text-align: right;">0.6073</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9781</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0319</td>
+<td style="text-align: right;">0.1497</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item18</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0828</td>
+<td style="text-align: right;">0.6282</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1003</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0010</td>
+<td style="text-align: right;">0.1086</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item19</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1494</td>
+<td style="text-align: right;">0.5963</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1821</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0438</td>
+<td style="text-align: right;">0.0328</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item20</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0495</td>
+<td style="text-align: right;">0.6384</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0587</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0168</td>
+<td style="text-align: right;">0.1403</td>
+<td style="text-align: right;">0.0069</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item21</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1127</td>
+<td style="text-align: right;">0.6362</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1354</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0021</td>
+<td style="text-align: right;">0.0379</td>
+<td style="text-align: right;">0.0069</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item22</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.8972</td>
+<td style="text-align: right;">0.6069</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.8753</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0291</td>
+<td style="text-align: right;">0.2038</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item23</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1319</td>
+<td style="text-align: right;">0.6126</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1600</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0193</td>
+<td style="text-align: right;">0.0829</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item24</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1225</td>
+<td style="text-align: right;">0.6200</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1472</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0320</td>
+<td style="text-align: right;">0.1291</td>
+<td style="text-align: right;">0.0067</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item25</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9901</td>
+<td style="text-align: right;">0.6050</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9887</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0179</td>
+<td style="text-align: right;">0.2456</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item26</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1487</td>
+<td style="text-align: right;">0.5951</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1799</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0777</td>
+<td style="text-align: right;">0.1174</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item27</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1156</td>
+<td style="text-align: right;">0.5901</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1415</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0396</td>
+<td style="text-align: right;">0.1265</td>
+<td style="text-align: right;">0.0064</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item28</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9725</td>
+<td style="text-align: right;">0.5692</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9666</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0309</td>
+<td style="text-align: right;">0.4365</td>
+<td style="text-align: right;">0.0062</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item29</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1204</td>
+<td style="text-align: right;">0.5680</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1474</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0926</td>
+<td style="text-align: right;">0.2820</td>
+<td style="text-align: right;">0.0062</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item30</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0868</td>
+<td style="text-align: right;">0.6167</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1037</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0445</td>
+<td style="text-align: right;">0.1327</td>
+<td style="text-align: right;">0.0067</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item31</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0622</td>
+<td style="text-align: right;">0.6224</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0754</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0041</td>
+<td style="text-align: right;">0.1853</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item32</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0127</td>
+<td style="text-align: right;">0.6196</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0143</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0245</td>
+<td style="text-align: right;">0.1473</td>
+<td style="text-align: right;">0.0067</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item33</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9341</td>
+<td style="text-align: right;">0.5895</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9188</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0126</td>
+<td style="text-align: right;">0.2538</td>
+<td style="text-align: right;">0.0064</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item34</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9820</td>
+<td style="text-align: right;">0.6051</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9790</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0238</td>
+<td style="text-align: right;">0.1670</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item35</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0969</td>
+<td style="text-align: right;">0.6267</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1162</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0236</td>
+<td style="text-align: right;">0.1251</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item36</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0828</td>
+<td style="text-align: right;">0.5959</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1016</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0152</td>
+<td style="text-align: right;">0.2273</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item37</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9335</td>
+<td style="text-align: right;">0.6087</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9215</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0628</td>
+<td style="text-align: right;">0.1762</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item38</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0387</td>
+<td style="text-align: right;">0.6008</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0468</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0207</td>
+<td style="text-align: right;">0.2167</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item39</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9559</td>
+<td style="text-align: right;">0.5748</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9459</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0276</td>
+<td style="text-align: right;">0.3748</td>
+<td style="text-align: right;">0.0062</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item40</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0689</td>
+<td style="text-align: right;">0.6143</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0843</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0011</td>
+<td style="text-align: right;">0.1328</td>
+<td style="text-align: right;">0.0067</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item41</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.8924</td>
+<td style="text-align: right;">0.6148</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.8710</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0481</td>
+<td style="text-align: right;">0.1798</td>
+<td style="text-align: right;">0.0067</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item42</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9780</td>
+<td style="text-align: right;">0.5874</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9732</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0135</td>
+<td style="text-align: right;">0.3772</td>
+<td style="text-align: right;">0.0064</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item43</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9538</td>
+<td style="text-align: right;">0.6217</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9450</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0247</td>
+<td style="text-align: right;">0.0995</td>
+<td style="text-align: right;">0.0067</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item44</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0172</td>
+<td style="text-align: right;">0.6319</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0201</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0117</td>
+<td style="text-align: right;">0.0228</td>
+<td style="text-align: right;">0.0069</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item45</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0579</td>
+<td style="text-align: right;">0.6126</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0710</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0049</td>
+<td style="text-align: right;">0.0874</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item46</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1248</td>
+<td style="text-align: right;">0.6305</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1482</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0457</td>
+<td style="text-align: right;">0.1183</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item47</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1328</td>
+<td style="text-align: right;">0.5962</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1610</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0607</td>
+<td style="text-align: right;">0.2016</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item48</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0191</td>
+<td style="text-align: right;">0.6264</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0221</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0207</td>
+<td style="text-align: right;">0.0743</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item49</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0611</td>
+<td style="text-align: right;">0.6470</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0715</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0276</td>
+<td style="text-align: right;">0.1118</td>
+<td style="text-align: right;">0.0070</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item50</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1715</td>
+<td style="text-align: right;">0.6082</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.2068</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0571</td>
+<td style="text-align: right;">0.0923</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item51</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9840</td>
+<td style="text-align: right;">0.6302</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9821</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0272</td>
+<td style="text-align: right;">0.0313</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item52</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1036</td>
+<td style="text-align: right;">0.6388</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1218</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0502</td>
+<td style="text-align: right;">0.0617</td>
+<td style="text-align: right;">0.0069</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item53</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1342</td>
+<td style="text-align: right;">0.5680</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1641</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0759</td>
+<td style="text-align: right;">0.2559</td>
+<td style="text-align: right;">0.0062</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item54</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9055</td>
+<td style="text-align: right;">0.6200</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.8860</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0187</td>
+<td style="text-align: right;">0.1408</td>
+<td style="text-align: right;">0.0067</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item55</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9662</td>
+<td style="text-align: right;">0.6027</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9582</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0043</td>
+<td style="text-align: right;">0.1820</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item56</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9934</td>
+<td style="text-align: right;">0.6417</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9931</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0182</td>
+<td style="text-align: right;">0.0183</td>
+<td style="text-align: right;">0.0070</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item57</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9187</td>
+<td style="text-align: right;">0.5732</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9012</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0745</td>
+<td style="text-align: right;">0.3983</td>
+<td style="text-align: right;">0.0062</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item58</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.8675</td>
+<td style="text-align: right;">0.5812</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.8390</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0907</td>
+<td style="text-align: right;">0.2736</td>
+<td style="text-align: right;">0.0063</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item59</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0076</td>
+<td style="text-align: right;">0.6296</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0097</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0086</td>
+<td style="text-align: right;">0.1248</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item60</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0293</td>
+<td style="text-align: right;">0.5865</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0357</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0162</td>
+<td style="text-align: right;">0.3251</td>
+<td style="text-align: right;">0.0064</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item61</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0622</td>
+<td style="text-align: right;">0.6105</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0760</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0039</td>
+<td style="text-align: right;">0.2152</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item62</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9129</td>
+<td style="text-align: right;">0.6338</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.8957</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0133</td>
+<td style="text-align: right;">0.1069</td>
+<td style="text-align: right;">0.0069</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item63</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0627</td>
+<td style="text-align: right;">0.6417</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0753</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0006</td>
+<td style="text-align: right;">0.0688</td>
+<td style="text-align: right;">0.0070</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item64</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0445</td>
+<td style="text-align: right;">0.6504</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0512</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0332</td>
+<td style="text-align: right;">0.0003</td>
+<td style="text-align: right;">0.0071</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item65</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9829</td>
+<td style="text-align: right;">0.5975</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9796</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0142</td>
+<td style="text-align: right;">0.1284</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item66</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.8433</td>
+<td style="text-align: right;">0.5806</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.8149</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.1083</td>
+<td style="text-align: right;">0.2437</td>
+<td style="text-align: right;">0.0063</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item67</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0374</td>
+<td style="text-align: right;">0.6353</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0450</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0021</td>
+<td style="text-align: right;">0.0715</td>
+<td style="text-align: right;">0.0069</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item68</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1822</td>
+<td style="text-align: right;">0.5633</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1982</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.1219</td>
+<td style="text-align: right;">0.1752</td>
+<td style="text-align: right;">0.0061</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item69</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.8892</td>
+<td style="text-align: right;">0.6210</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.8660</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0131</td>
+<td style="text-align: right;">0.1668</td>
+<td style="text-align: right;">0.0067</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item70</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9701</td>
+<td style="text-align: right;">0.5936</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9637</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0154</td>
+<td style="text-align: right;">0.2249</td>
+<td style="text-align: right;">0.0064</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item71</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0522</td>
+<td style="text-align: right;">0.6096</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0629</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0227</td>
+<td style="text-align: right;">0.1896</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item72</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1440</td>
+<td style="text-align: right;">0.6016</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1744</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0529</td>
+<td style="text-align: right;">0.1703</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item73</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1961</td>
+<td style="text-align: right;">0.6123</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.2335</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0668</td>
+<td style="text-align: right;">0.0229</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item74</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1904</td>
+<td style="text-align: right;">0.5921</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.2184</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0791</td>
+<td style="text-align: right;">0.1375</td>
+<td style="text-align: right;">0.0064</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item75</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0355</td>
+<td style="text-align: right;">0.6363</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0440</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0215</td>
+<td style="text-align: right;">0.0574</td>
+<td style="text-align: right;">0.0069</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item76</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1194</td>
+<td style="text-align: right;">0.6016</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1435</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0717</td>
+<td style="text-align: right;">0.1913</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item77</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9522</td>
+<td style="text-align: right;">0.6230</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9419</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0008</td>
+<td style="text-align: right;">0.0718</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item78</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9566</td>
+<td style="text-align: right;">0.6001</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9490</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0553</td>
+<td style="text-align: right;">0.1787</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item79</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9569</td>
+<td style="text-align: right;">0.6226</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9484</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0145</td>
+<td style="text-align: right;">0.0761</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item80</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9652</td>
+<td style="text-align: right;">0.5577</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9569</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0254</td>
+<td style="text-align: right;">0.5036</td>
+<td style="text-align: right;">0.0060</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item81</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1424</td>
+<td style="text-align: right;">0.5651</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1672</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.1073</td>
+<td style="text-align: right;">0.2943</td>
+<td style="text-align: right;">0.0061</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item82</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1708</td>
+<td style="text-align: right;">0.5951</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.2037</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0765</td>
+<td style="text-align: right;">0.1986</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item83</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9669</td>
+<td style="text-align: right;">0.6461</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9618</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0239</td>
+<td style="text-align: right;">0.0211</td>
+<td style="text-align: right;">0.0070</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item84</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1069</td>
+<td style="text-align: right;">0.5632</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1319</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0696</td>
+<td style="text-align: right;">0.2761</td>
+<td style="text-align: right;">0.0061</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item85</td>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0698</td>
+<td style="text-align: right;">0.5931</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0862</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0036</td>
+<td style="text-align: right;">0.1963</td>
+<td style="text-align: right;">0.0064</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item86</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9787</td>
+<td style="text-align: right;">0.6307</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9746</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0061</td>
+<td style="text-align: right;">0.0259</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item87</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0493</td>
+<td style="text-align: right;">0.6401</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0596</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0058</td>
+<td style="text-align: right;">0.0769</td>
+<td style="text-align: right;">0.0069</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item88</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0828</td>
+<td style="text-align: right;">0.5992</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1010</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0235</td>
+<td style="text-align: right;">0.2465</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item89</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0220</td>
+<td style="text-align: right;">0.6166</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0265</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0079</td>
+<td style="text-align: right;">0.0840</td>
+<td style="text-align: right;">0.0067</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item90</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.1016</td>
+<td style="text-align: right;">0.5987</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.1234</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0418</td>
+<td style="text-align: right;">0.1186</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item91</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0107</td>
+<td style="text-align: right;">0.6201</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0126</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0079</td>
+<td style="text-align: right;">0.0858</td>
+<td style="text-align: right;">0.0067</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item92</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0288</td>
+<td style="text-align: right;">0.5837</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0347</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0286</td>
+<td style="text-align: right;">0.3469</td>
+<td style="text-align: right;">0.0063</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item93</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9502</td>
+<td style="text-align: right;">0.6020</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9399</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0249</td>
+<td style="text-align: right;">0.0512</td>
+<td style="text-align: right;">0.0065</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item94</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9972</td>
+<td style="text-align: right;">0.6258</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9959</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0135</td>
+<td style="text-align: right;">0.1982</td>
+<td style="text-align: right;">0.0068</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item95</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">2.9514</td>
+<td style="text-align: right;">0.6066</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.9435</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0687</td>
+<td style="text-align: right;">0.2065</td>
+<td style="text-align: right;">0.0066</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item96</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0366</td>
+<td style="text-align: right;">0.6193</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0450</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0085</td>
+<td style="text-align: right;">0.1059</td>
+<td style="text-align: right;">0.0067</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item97</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0666</td>
+<td style="text-align: right;">0.6384</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0793</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0151</td>
+<td style="text-align: right;">0.0963</td>
+<td style="text-align: right;">0.0069</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item98</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0181</td>
+<td style="text-align: right;">0.6337</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0226</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0146</td>
+<td style="text-align: right;">0.1888</td>
+<td style="text-align: right;">0.0069</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Item99</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0542</td>
+<td style="text-align: right;">0.6149</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0659</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0074</td>
+<td style="text-align: right;">0.2372</td>
+<td style="text-align: right;">0.0067</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Item100</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">8500</td>
+<td style="text-align: right;">3.0216</td>
+<td style="text-align: right;">0.5742</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0274</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-0.0062</td>
+<td style="text-align: right;">0.4452</td>
+<td style="text-align: right;">0.0062</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Cleaning the data involves the handling of missing values. 15% of the data is missing and there are no complete rows. In order to address this missingness, imptuation is used with the makeX() function from the glmnet() package.</p>
@@ -129,65 +1764,65 @@ X1 0.18</code></pre>
 <p><img src="Final_project_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>              item_1       item_2       item_3       item_4       item_5
-item_1   1.000000000 -0.008050056 -0.011333592  0.009592578 -0.011190914
-item_2  -0.008050056  1.000000000  0.008618004  0.003079410  0.003715811
-item_3  -0.011333592  0.008618004  1.000000000  0.002635139 -0.010906044
-item_4   0.009592578  0.003079410  0.002635139  1.000000000 -0.003181487
-item_5  -0.011190914  0.003715811 -0.010906044 -0.003181487  1.000000000
-item_6  -0.006859116  0.010779430 -0.008328796  0.011453777 -0.005490556
-item_7  -0.004956589  0.014057200 -0.007846620  0.017897398 -0.002821324
-item_8  -0.004204708  0.004621634  0.006851235 -0.027359464 -0.015050215
-item_9  -0.012344701  0.002285383 -0.016774124  0.005898325  0.014829832
-item_10  0.013015243 -0.006969842  0.013634808 -0.003679456  0.007626910</code></pre>
+<pre><code>           Item1     Item2     Item3     Item4     Item5
+Item1  1.0000000 0.4591443 0.4162802 0.5660682 0.4599866
+Item2  0.4591443 1.0000000 0.6588909 0.5676749 0.6431862
+Item3  0.4162802 0.6588909 1.0000000 0.5919605 0.6541206
+Item4  0.5660682 0.5676749 0.5919605 1.0000000 0.5837431
+Item5  0.4599866 0.6431862 0.6541206 0.5837431 1.0000000
+Item6  0.5320221 0.5882705 0.6128934 0.6998072 0.5759141
+Item7  0.5357376 0.4780027 0.3980147 0.4935722 0.3900017
+Item8  0.4867602 0.6242732 0.5307151 0.4870092 0.5894303
+Item9  0.3425716 0.6393282 0.6682855 0.5300570 0.6031866
+Item10 0.5996082 0.5475804 0.5314562 0.6459050 0.5639058</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="Final_project_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>              item_1       item_2       item_3       item_4       item_5
-item_1   1.000000000 -0.008050056 -0.011333592  0.009592578 -0.011190914
-item_2  -0.008050056  1.000000000  0.008618004  0.003079410  0.003715811
-item_3  -0.011333592  0.008618004  1.000000000  0.002635139 -0.010906044
-item_4   0.009592578  0.003079410  0.002635139  1.000000000 -0.003181487
-item_5  -0.011190914  0.003715811 -0.010906044 -0.003181487  1.000000000
-item_6  -0.006859116  0.010779430 -0.008328796  0.011453777 -0.005490556
-item_7  -0.004956589  0.014057200 -0.007846620  0.017897398 -0.002821324
-item_8  -0.004204708  0.004621634  0.006851235 -0.027359464 -0.015050215
-item_9  -0.012344701  0.002285383 -0.016774124  0.005898325  0.014829832
-item_10  0.013015243 -0.006969842  0.013634808 -0.003679456  0.007626910</code></pre>
+<pre><code>           Item1     Item2     Item3     Item4     Item5
+Item1  1.0000000 0.4591443 0.4162802 0.5660682 0.4599866
+Item2  0.4591443 1.0000000 0.6588909 0.5676749 0.6431862
+Item3  0.4162802 0.6588909 1.0000000 0.5919605 0.6541206
+Item4  0.5660682 0.5676749 0.5919605 1.0000000 0.5837431
+Item5  0.4599866 0.6431862 0.6541206 0.5837431 1.0000000
+Item6  0.5320221 0.5882705 0.6128934 0.6998072 0.5759141
+Item7  0.5357376 0.4780027 0.3980147 0.4935722 0.3900017
+Item8  0.4867602 0.6242732 0.5307151 0.4870092 0.5894303
+Item9  0.3425716 0.6393282 0.6682855 0.5300570 0.6031866
+Item10 0.5996082 0.5475804 0.5314562 0.6459050 0.5639058</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="Final_project_files/figure-html/unnamed-chunk-5-4.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>              item_1       item_2       item_3       item_4       item_5
-item_1   1.000000000 -0.008050056 -0.011333592  0.009592578 -0.011190914
-item_2  -0.008050056  1.000000000  0.008618004  0.003079410  0.003715811
-item_3  -0.011333592  0.008618004  1.000000000  0.002635139 -0.010906044
-item_4   0.009592578  0.003079410  0.002635139  1.000000000 -0.003181487
-item_5  -0.011190914  0.003715811 -0.010906044 -0.003181487  1.000000000
-item_6  -0.006859116  0.010779430 -0.008328796  0.011453777 -0.005490556
-item_7  -0.004956589  0.014057200 -0.007846620  0.017897398 -0.002821324
-item_8  -0.004204708  0.004621634  0.006851235 -0.027359464 -0.015050215
-item_9  -0.012344701  0.002285383 -0.016774124  0.005898325  0.014829832
-item_10  0.013015243 -0.006969842  0.013634808 -0.003679456  0.007626910</code></pre>
+<pre><code>           Item1     Item2     Item3     Item4     Item5
+Item1  1.0000000 0.4591443 0.4162802 0.5660682 0.4599866
+Item2  0.4591443 1.0000000 0.6588909 0.5676749 0.6431862
+Item3  0.4162802 0.6588909 1.0000000 0.5919605 0.6541206
+Item4  0.5660682 0.5676749 0.5919605 1.0000000 0.5837431
+Item5  0.4599866 0.6431862 0.6541206 0.5837431 1.0000000
+Item6  0.5320221 0.5882705 0.6128934 0.6998072 0.5759141
+Item7  0.5357376 0.4780027 0.3980147 0.4935722 0.3900017
+Item8  0.4867602 0.6242732 0.5307151 0.4870092 0.5894303
+Item9  0.3425716 0.6393282 0.6682855 0.5300570 0.6031866
+Item10 0.5996082 0.5475804 0.5314562 0.6459050 0.5639058</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="Final_project_files/figure-html/unnamed-chunk-5-5.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>              item_1       item_2       item_3       item_4       item_5
-item_1   1.000000000 -0.008050056 -0.011333592  0.009592578 -0.011190914
-item_2  -0.008050056  1.000000000  0.008618004  0.003079410  0.003715811
-item_3  -0.011333592  0.008618004  1.000000000  0.002635139 -0.010906044
-item_4   0.009592578  0.003079410  0.002635139  1.000000000 -0.003181487
-item_5  -0.011190914  0.003715811 -0.010906044 -0.003181487  1.000000000
-item_6  -0.006859116  0.010779430 -0.008328796  0.011453777 -0.005490556
-item_7  -0.004956589  0.014057200 -0.007846620  0.017897398 -0.002821324
-item_8  -0.004204708  0.004621634  0.006851235 -0.027359464 -0.015050215
-item_9  -0.012344701  0.002285383 -0.016774124  0.005898325  0.014829832
-item_10  0.013015243 -0.006969842  0.013634808 -0.003679456  0.007626910</code></pre>
+<pre><code>           Item1     Item2     Item3     Item4     Item5
+Item1  1.0000000 0.4591443 0.4162802 0.5660682 0.4599866
+Item2  0.4591443 1.0000000 0.6588909 0.5676749 0.6431862
+Item3  0.4162802 0.6588909 1.0000000 0.5919605 0.6541206
+Item4  0.5660682 0.5676749 0.5919605 1.0000000 0.5837431
+Item5  0.4599866 0.6431862 0.6541206 0.5837431 1.0000000
+Item6  0.5320221 0.5882705 0.6128934 0.6998072 0.5759141
+Item7  0.5357376 0.4780027 0.3980147 0.4935722 0.3900017
+Item8  0.4867602 0.6242732 0.5307151 0.4870092 0.5894303
+Item9  0.3425716 0.6393282 0.6682855 0.5300570 0.6031866
+Item10 0.5996082 0.5475804 0.5314562 0.6459050 0.5639058</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="Final_project_files/figure-html/unnamed-chunk-5-6.png" class="img-fluid" width="672"></p>
@@ -196,22 +1831,30 @@ item_10  0.013015243 -0.006969842  0.013634808 -0.003679456  0.007626910</code><
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>  mean(age)
-1  31.62916</code></pre>
+1  31.30686</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  mean(age)
-1  31.64116</code></pre>
+1  31.07834</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="Final_project_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing missing values (`position_stack()`).</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="Final_project_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Final_project_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Lastly, we add a proportion of variance explained plot to show how well the factors account for the variance in the response data.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Final_project_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
