@@ -35,8 +35,8 @@ This study aims to explore the structure of maladaptive imagination. Specificall
 Examining this relationship will clarify the extent to which imagination can prove maladaptive in various contexts. For example, in affective disorders like depression, imaginative processes may contribute to persistent negative anticipatory thinking and catastrophizing, acting as a feature of its symptomatology. In thought disorders such as schizophrenia, dysfunctional imaginative processes could relate to difficulties in distinguishing between internal imaginings and external reality. In the realm of Axis II disorders, persistent imaginative patterns that result in maladaptive decision making and elevated instability in affect may underpin certain personality disorders. This confluence between imaginative processes and personality pathology highlights the potential for enhancing existing therapeutic methodologies by integrating imagination. Clinical approaches such as Cognitive Behavioral Therapy (CBT) and Art Therapy already target malformed cognitions (Hoffman et al., 2012) and leverage imaginative expression as therapeutic tools (Malchiodi, 2011) and could further benefit from the insights of this research by targeting specific maladaptive imaginative processes
 
 # Hypotheses
-We hypothesize there will be four distinct factors of imagination that emerge. Anxiety, defined by imagination that 
 
+We hypothesize there will be four distinct factors of imagination that emerge. Anxiety, defined by imagination that
 
 # Methods
 
@@ -56,7 +56,7 @@ suppressMessages(suppressWarnings(library(tidyverse)))
 suppressMessages(suppressWarnings(library(MASS)))
 suppressMessages(suppressWarnings(library(reshape2)))
 suppressMessages(suppressWarnings(library(knitr)))
-
+suppressMessages(suppressWarnings(library(patchwork)))
 ```
 
 Data is simulated using a random sampling procedure. Four latent factors consisting of items rated 1 - 6 are produced using the sample() function and stored into a dataframe.
@@ -132,6 +132,69 @@ write.csv(scale_data, here(file_path <- here("data", "scale_data.csv"))) #Saving
 
 # Results
 
+First, sample demographics and visualizations are provided below. As can be seen, the simulated sample is quite diverse in terms of number of countries represented, ages represented and, races represented.
+
+```{r}
+#comparing age demographics for white and non-white races
+
+age1 <- scale_data %>%
+filter(race == "White") %>%
+summarize(mean(age))
+
+age2 <- scale_data %>%
+filter(race != "White") %>%
+summarize(mean(age))
+
+break_down<- scale_data %>%
+  group_by(gender, race, country) %>%
+  mutate(avg_age= mean(age))
+
+
+#demographics descriptives
+
+country <- scale_data %>%
+  group_by(country) %>%
+  summarise(total= n()) 
+
+gender <- scale_data %>%
+  group_by(gender) %>%
+  summarise(total= n()) %>%
+  mutate(frequency = total / sum(total))
+
+race <- scale_data %>%
+  group_by(race) %>%
+  summarise(total= n())
+
+gender %>%
+  kable(col.names= c("Gender", "Number of Participants", "Porportion of sample"))
+
+race %>%
+  kable(col.names= c("Race", "Number of Participants"))
+
+ country %>%
+  kable(col.names= c("Country", "Number of Participants")) 
+ 
+ age1 %>%
+   kable(col.names= "Average age of White Sample", digits = 2)
+ 
+ age2 %>%
+   kable(col.names= "Average age of Non-White Sample", digits= 2)
+ 
+ #visualizing demographics
+
+break_down %>%
+  ggplot(aes(avg_age, race))+
+  geom_col(aes(fill = gender), position = "dodge") +
+  facet_wrap(~country, ncol= 2) +
+  theme_minimal() +
+  labs(
+    title = "Average Age by Race and Country",
+    x = "Average Age",
+    y = "Race",
+    fill = "Gender"
+  )
+```
+
 We found four factors of imagination emerge from our analyses. Data is visualized below. (more info)
 
 ```{r}
@@ -153,6 +216,9 @@ descScaleItems %>% kable(
   col.names = c("Item", "Number of Observations", "Mean Response", "Standard Deviation", "Median Response", "Trimmed Mean Response", "Median Absolute Deviation", "Minimum", "Maximum", "Range", "Skew", "Kurtosis", "Standard Error" ),
   digits = 4
 )
+
+
+
 
 ```
 
@@ -199,7 +265,7 @@ factor_4 <- scale_data[,c(1:5, 81:105)]
 
 ```
 
-The data is visualized in mutliple ways, including a correlation table, heatmap, and other plots.
+The data is visualized in multiple ways, including a correlation table, heatmap, and other plots.
 
 ```{r}
 
@@ -215,53 +281,33 @@ corrplot(corr= matrix, method = "square")
 #Correlation matrix for each factor starting with factor 1
 matrix1 <-cor(imp_sim[,1:25], use="pairwise") 
 head(unlist(matrix)[,1:5], 10)
-corrplot(corr= matrix1, method = "square", title = "Correlation Matrix for Anxiety")
+
+m1 <- corrplot(corr= matrix1, method = "square", title = "Correlation Matrix for Anxiety")
 
 #Correlation matrix for factor 2
 matrix2 <-cor(imp_sim[,26:50], use="pairwise") 
 head(unlist(matrix)[,1:5], 10)
-corrplot(corr= matrix2, method = "square", title = "Correlation Matrix for Hopelessness")
+
+m2<- corrplot(corr= matrix2, method = "square", title = "Correlation Matrix for Hopelessness")
 
 #Correlation matrix for factor 3
 matrix3 <-cor(imp_sim[,51:75], use="pairwise") 
 head(unlist(matrix)[,1:5], 10)
-corrplot(corr= matrix3, method = "square", title = "Correlation Matrix for Resentment")
+
+m3 <- corrplot(corr= matrix3, method = "square", title = "Correlation Matrix for Resentment")
 
 #Correlation matrix for factor 4
 matrix4 <-cor(imp_sim[,76:100], use="pairwise") 
 head(unlist(matrix)[,1:5], 10)
-corrplot(corr= matrix4, method = "square", title = "Correlation Matrix for Shame")
+
+m4<- corrplot(corr= matrix4, method = "square", title = "Correlation Matrix for Shame")
+
+
+m1 + m2 + m3 + m4
 
 ```
 
-```{r}
-#comparing age demographics for white and non-white races
-
-scale_data %>%
-filter(race == "White") %>%
-summarize(mean(age))
-
-scale_data %>%
-filter(race != "White") %>%
-summarize(mean(age))
-
-break_down<- scale_data %>%
-  group_by(gender, race, country) %>%
-  mutate(avg_age= mean(age))
-
-#visualizing demographics
-
-break_down %>%
-  ggplot(aes(avg_age, race))+
-  geom_col(aes(fill = gender), position = "dodge") +
-  facet_wrap(~country, ncol= 2) +
-  theme_minimal() +
-  labs(
-    title = "Average Age by Race and Country",
-    x = "Average Age",
-    y = "Race",
-    fill = "Gender"
-  )
+```{}
 ```
 
 ```{r}
