@@ -28,7 +28,7 @@ Mullally & Maguire (2014) emphasize that memory forms the foundation for such im
 
 The evolution in psychometric research towards multifactor, dimensional models reflects a significant shift in how imagination is measured. Historically, tools like the Torrance Tests of Creative Thinking (TCTT; Torrance, 1974) and Gough's (1979) Creative Personality Scale approached assessing imagination as a component of creativity. However, recent advancements have led to direct measures of imagination as a standalone construct. Notable advancements include the Imaginal Processes Inventory (IPI; Singer & Antrobus, 1963; Singer & Antrobus, 1966), a cross-cultural measure by Feng et al. (2017), and dimensional scales such as the Four-Factor Imagination Scale (FFIS; Zabelina & Condon, 2020) and the Dual-Factor Imagination Scale (DFIS; Sassenberg et al., 2023). However, the need for direct and clinically useful assessment instruments remains.
 
-#The Current Study
+# The Current Study
 
 This study aims to explore the structure of maladaptive imagination. Specifically, the primary objective is to develop a psychometric assessment instrument that captures the imaginative processes that inflict harm on mental health and well-being.
 
@@ -278,37 +278,42 @@ heatmap(matrix, Rowv = NA, Colv = NA)
 #making a correlation plot 
 corrplot(corr= matrix, method = "square")
 
-#Correlation matrix for each factor starting with factor 1
-matrix1 <-cor(imp_sim[,1:25], use="pairwise") 
-head(unlist(matrix)[,1:5], 10)
+#Correlation matrix for factor 1
+matrix1 <- cor(imp_sim[,1:25], use="pairwise")
 
-m1 <- corrplot(corr= matrix1, method = "square", title = "Correlation Matrix for Anxiety")
+m1 <- function() { corrplot(corr= matrix1, method = "square", tl.pos = 'n') }
 
 #Correlation matrix for factor 2
-matrix2 <-cor(imp_sim[,26:50], use="pairwise") 
-head(unlist(matrix)[,1:5], 10)
+matrix2 <- cor(imp_sim[,26:50], use="pairwise")
 
-m2<- corrplot(corr= matrix2, method = "square", title = "Correlation Matrix for Hopelessness")
+m2 <- function() { corrplot(corr= matrix2, method = "square", tl.pos = 'n') }
 
 #Correlation matrix for factor 3
-matrix3 <-cor(imp_sim[,51:75], use="pairwise") 
-head(unlist(matrix)[,1:5], 10)
+matrix3 <- cor(imp_sim[,51:75], use="pairwise")
 
-m3 <- corrplot(corr= matrix3, method = "square", title = "Correlation Matrix for Resentment")
+m3 <- function() { corrplot(corr= matrix3, method = "square", tl.pos = 'n') }
 
 #Correlation matrix for factor 4
-matrix4 <-cor(imp_sim[,76:100], use="pairwise") 
-head(unlist(matrix)[,1:5], 10)
+matrix4 <- cor(imp_sim[,76:100], use="pairwise")
 
-m4<- corrplot(corr= matrix4, method = "square", title = "Correlation Matrix for Shame")
+m4 <- function() { corrplot(corr= matrix4, method = "square", tl.pos = 'n') }
+
+#Setting up the layout
+par(mfrow=c(2,2), mar=c(4,4,2,2) + 0.1)
 
 
-m1 + m2 + m3 + m4
+#Plotting each corrplot in the layout
+m1()
+m2()
+m3()
+m4()
+
+#Resetting to default layout
+par(mfrow=c(1,1), mar=c(5,4,2,2) + 0.1)
 
 ```
 
-```{}
-```
+In the above four-tile correlation plot, the displayed factors clockwise from the top left are: 1) Anxiety, 2) Hopelessness, 3) Resentment, 4) Shame.
 
 ```{r}
 #visualizing mean responses for each factor 
@@ -378,8 +383,15 @@ ggplot(data.frame(Factor = 1:n_factors, CumulativeVariance = cum_var_explained),
 
 # Discussion
 
-In this study, we observed meaningful patterns of associations between the pool of imagination items administered, substantiating the hypothesis that imagination can prove maladaptive in various contexts and that it can be quantified in a four-factor structure. Imaginative emotional valence emerged as strongly associated with the PID-5, suggesting a clinically significant (Zimmermann et al., 2019; Miller et al., 2022) link between imagination and affective psychopathology. Similarly, the Frequency dimension mirrored the patterns observed in Emotional Valence but with slightly reduced effect sizes (see Table 4) and additionally correlated with traits indicative of cognitive biases and perceptual dysregulation. These associations point to the potential of excessive engagement in imagination in contributing to thought disorders (Andrews-Hanna & Grilli, 2021), indicating imaginative frequency is of clinical significance. These findings reinforce the clinical relevance of imaginative frequency. Directedness showed modest associations with pathological traits, while Complexity's significant null associations with most PID-5 facets reveal a complex, perhaps less direct, relationship with personality pathology, warranting further investigation.
+In this study, we observed meaningful patterns of associations between the pool of imagination items administered, substantiating the hypothesis that imagination can prove maladaptive in various contexts and that it can be quantified in a four-factor structure. 25 items loaded on to each respective factor of Anxiety, Hopelessness, Resentment, and Shame.
 
-Complementing these correlational findings, our application of statistical learning techniques predicted various aspects of imagination based on the content of maladaptive trait items. This convergence of the results from different analytic methods attests to the strength of our findings and highlights the clinical potential of these techniques in assessing the impact of imagination on psychopathology. The ability of these models to predict the relationship between imagination and personality pathology points to the importance of considering imaginative processes in clinical assessments and interventions.
+These findings align with prior research (Castillo & Condon, 2023) which show imaginative emotional valence is strongly associated with pathological personality traits, suggesting a clinically significant (Zimmermann et al., 2019; Miller et al., 2022) link between imagination and affective psychopathology. This is particularly the case for the emergent factors of Shame and Hopelessness, which are defined by emotionally saturated items (e.g. "I see no hope for the future" or "I feel ashamed when I picture myself in comparison to others").
+
+Similarly, the Anxiety factor is similar to the Frequency dimension of the FFIS, revolving around persistent intrusive thoughts which impede adaptive behaviors and can result in perceptual dysregulation. The observed patterns in this study mirrored the patterns observed in Castillo & Condon (2023). These associations point to the potential of excessive engagement in imagination in contributing to thought disorders (Andrews-Hanna & Grilli, 2021), indicating imaginative frequency is of clinical significance. These findings reinforce the clinical relevance of imaginative frequency and anxiety induced by imagination. 
+Of the four emergent factors, resentment demonstrated the weakest psychometric properties, which may be attributable to the factor's association with antisocial traits like the Dark Triad. Aggression and imagination are known to correlate with opposing constructs (imagination with openness, aggression with limited openness) and this may be resulting in attenuation effects. The Dark Triad literature (see Kay & Arrow, 2022) suggests a link with Machiavellianism, relating to adopting a socially predatory strategy. Our findings do support this, suggesting resentment may play into plotting revenge and attempting to set verbal "traps" for others.
+
+# Conclusion
+
+Overall, these results highlight the clinical potential of these imagination factors in assessing psychopathology and treating its symptoms and underlying causes. The ability of these models to predict the relationship between imagination and personality pathology points to the importance of considering imaginative processes in clinical assessments and interventions.
 
 # References
