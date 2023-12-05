@@ -56,7 +56,6 @@ suppressMessages(suppressWarnings(library(tidyverse)))
 suppressMessages(suppressWarnings(library(MASS)))
 suppressMessages(suppressWarnings(library(reshape2)))
 suppressMessages(suppressWarnings(library(knitr)))
-suppressMessages(suppressWarnings(library(patchwork)))
 ```
 
 Data is simulated using a random sampling procedure. Four latent factors consisting of items rated 1 - 6 are produced using the sample() function and stored into a dataframe.
@@ -132,7 +131,7 @@ write.csv(scale_data, here(file_path <- here("data", "scale_data.csv"))) #Saving
 
 # Results
 
-First, sample demographics and visualizations are provided below. As can be seen, the simulated sample is quite diverse in terms of number of countries represented, ages represented and, races represented.
+First, sample demographics and visualizations are provided below. As can be seen, the simulated sample is quite diverse in terms of number of countries , ages, and races represented, which is good for scale development.
 
 ```{r}
 #comparing age demographics for white and non-white races
@@ -195,7 +194,7 @@ break_down %>%
   )
 ```
 
-We found four factors of imagination emerge from our analyses. Data is visualized below. (more info)
+We found four factors of imagination emerge from our analyses. The items clustered around four points, the four main factors: anxiety, hopelessness, resentment, and shame, suggesting that the items administered are measuring one of four types of maladaptive imagination. This is visualized below.
 
 ```{r}
 #Descriptives of the 100 items
@@ -372,7 +371,7 @@ factor_plot <- corrplot(redoneItems, method = "color",
          tl.cex = 1)
 ```
 
-Lastly, we add a proportion of variance explained plot to show how well the factors account for the variance in the response data.
+Lastly, we add a proportion of variance explained plot to show how well the factors account for the variance in the response data. From this figure, we can see that each factor explains additional and about equal variance.
 
 ```{r}
 #Plot
