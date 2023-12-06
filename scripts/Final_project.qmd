@@ -131,18 +131,19 @@ write.csv(scale_data, here(file_path <- here("data", "scale_data.csv"))) #Saving
 
 # Results
 
-First, sample demographics and visualizations are provided below. As can be seen, the simulated sample was quite diverse in terms of number of countries , ages, and races represented, which is good for scale development.
+First, sample demographics and visualizations are provided below. As can be seen, the simulated sample was quite diverse in terms of number of countries, ages, and races represented, which is good for scale development.
 
 ```{r}
 #comparing age demographics for white and non-white races
 
 age1 <- scale_data %>%
 filter(race == "White") %>%
-summarize(mean(age))
+summarize(age_mean = mean(age), sd = sd(age), total = n()) 
+
 
 age2 <- scale_data %>%
 filter(race != "White") %>%
-summarize(mean(age))
+summarize(age_mean= mean(age), sd = sd(age), total = n())
 
 break_down<- scale_data %>%
   group_by(gender, race, country) %>%
@@ -174,10 +175,10 @@ race %>%
   kable(col.names= c("Country", "Number of Participants")) 
  
  age1 %>%
-   kable(col.names= "Average age of White Sample", digits = 2)
+   kable(col.names= c("Average age of White Sample", "Standard Deviation", "N"), digits = 2)
  
  age2 %>%
-   kable(col.names= "Average age of Non-White Sample", digits= 2)
+   kable(col.names= c("Average age of Non-White Sample", "Standard Deviation", "N"), digits= 2)
  
  #visualizing demographics
 
@@ -194,7 +195,7 @@ break_down %>%
   )
 ```
 
-We found four factors of imagination emerge from our analyses. The items clustered around four points, the four main factors: anxiety, hopelessness, resentment, and shame, suggesting that the items administered are measuring one of four types of maladaptive imagination. This is visualized below.
+We found four factors of imagination emerge from our analyses. The items clustered around four points, the four main factors: anxiety, hopelessness, resentment, and shame, suggesting that the items administered are measuring one of four types of maladaptive imagination. The descriptive statistics for the 100 items are provided below.
 
 ```{r}
 #Descriptives of the 100 items
@@ -221,7 +222,7 @@ descScaleItems %>% kable(
 
 ```
 
-Cleaning the data involved the handling of missing values. 15% of the data was missing and there were no complete rows. In order to address this missingness, imptuation was used with the makeX() function from the glmnet() package.
+In order to do a proper factor analysis, we had to handle missingness in the data. 15% of the data was missing and there were no complete rows. In order to address this missingness, imptuation was used with the makeX() function from the glmnet() package.
 
 ```{r}
 #Handling NAs by replacing with mean of column 
@@ -264,7 +265,7 @@ factor_4 <- scale_data[,c(1:5, 81:105)]
 
 ```
 
-The data is visualized in multiple ways, including a correlation table, heatmap, and other plots.
+We visualized the data in multiple ways, including a correlation table, heatmap, and other plots. In the heatmap (first figure from the top, yellow), we can see that all the items seem to correlate with each other to some degree (multicolinearity). This is puzzling, since we would expect individual factors to emerge from the data. Therefore, we completed a series of other correlation plots (in blue) to show that we in fact have 4 unique clusters of items, each measuring a distinct aspect of maladaptive imagination.
 
 ```{r}
 
