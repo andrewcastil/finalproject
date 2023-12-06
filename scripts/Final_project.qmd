@@ -265,7 +265,7 @@ factor_4 <- scale_data[,c(1:5, 81:105)]
 
 ```
 
-We visualized the data in multiple ways, including a correlation table, heatmap, and other plots. In the heatmap (first figure from the top, yellow), we can see that all the items seem to correlate with each other to some degree (multicolinearity). This is puzzling, since we would expect individual factors to emerge from the data. Therefore, we completed a series of other correlation plots (in blue) to show that we in fact have 4 unique clusters of items, each measuring a distinct aspect of maladaptive imagination.
+We visualized the data in multiple ways, including a correlation table, heatmap, and other plots. In the heatmap (first figure from the top, yellow), we can see that all the items seem to correlate with each other to some degree (multicolinearity). This is puzzling, since we would expect individual factors to emerge from the data. Therefore, we completed a series of other correlation plots (in blue) to show that we in fact have 4 unique clusters of items, each measuring a distinct aspect of maladaptive imagination. The first one, is a correlation plot of all 100 items. The second plot shows this same plot but now grouped by factor, where each red square is a factor. Finally, each factor is plotted separately to show how items within a factor correlate with each other.
 
 ```{r}
 
