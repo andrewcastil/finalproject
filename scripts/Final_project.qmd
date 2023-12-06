@@ -276,7 +276,7 @@ matrix <- cor(imp_sim, use="pairwise")
 heatmap(matrix, Rowv = NA, Colv = NA)
 
 #making a correlation plot 
-corrplot(corr= matrix, method = "square")
+corrplot(corr= matrix, method = "square", tl.cex = 0.3)
 
 #Correlation matrix for factor 1
 matrix1 <- cor(imp_sim[,1:25], use="pairwise")
@@ -298,49 +298,6 @@ matrix4 <- cor(imp_sim[,76:100], use="pairwise")
 
 m4 <- function() { corrplot(corr= matrix4, method = "square", tl.pos = 'n') }
 
-#Setting up the layout
-par(mfrow=c(2,2), mar=c(4,4,2,2) + 0.1)
-
-
-#Plotting each corrplot in the layout
-m1()
-m2()
-m3()
-m4()
-
-#Resetting to default layout
-par(mfrow=c(1,1), mar=c(5,4,2,2) + 0.1)
-
-```
-
-In the above four-tile correlation plot, the displayed factors clockwise from the top left are: 1) Anxiety, 2) Hopelessness, 3) Resentment, 4) Shame.
-
-```{r}
-#visualizing mean responses for each factor 
-
-mean_scores <- scale_data_long %>% 
-  group_by(item) %>% 
-  summarize(mean = mean(score))
-
-mean_scores %>% 
-  mutate(item = parse_number(item)) %>% 
-  mutate(factor = case_when(
-    item <= 25 ~ "Anxiety",
-    item > 25 & item <= 50 ~ "Hopelessness",
-    item > 50 & item <= 75 ~ "Resentment",
-    item > 75 ~ "Shame")) %>% 
-  ggplot(aes(x = item, y = mean)) +
-  geom_col(fill= "blue1") +
-  labs(y = "Mean Response (1-5)",
-       x = "Item",
-       title = "Mean Responses to Items by Factor") +
-  facet_wrap(~factor) +
-  theme_minimal() 
-```
-
-The above plot visualizes mean score for each item grouped by factor. This plot provides an assurance that each item is an appropriate measure by demonstrating a similarity in mean response for items across each factor. If there were a deviation from a uniform distribution in this plot, it would be an indication that (a) certain item(s) should not be used. This plot shows that, on average, individuals tended to agree a bit more with resentment-related statements and disagree a bit more with hopeless and shame-related statements.
-
-```{r}
 #factor analysis
 
 fa_result <- fa(imp_sim, nfactors = n_factors, rotate = "varimax")
@@ -372,7 +329,29 @@ factor_plot <- corrplot(redoneItems, method = "color",
          tl.pos = 'n',
          #addCoef.col = 'black', 
          tl.cex = 1)
+
+rect(0, 76, 25, 100, border = "red", lwd = 3)
+rect(26, 51, 50, 75, border = "red", lwd = 3)
+rect(51, 26, 75, 50, border = "red", lwd = 3)
+rect(76, 0, 100, 25, border = "red", lwd = 3)
+
+
+#Setting up the layout
+par(mfrow=c(2,2), mar=c(4,4,2,2) + 0.1)
+
+
+#Plotting each corrplot in the layout
+m1()
+m2()
+m3()
+m4()
+
+#Resetting to default layout
+par(mfrow=c(1,1), mar=c(5,4,2,2) + 0.1)
+
 ```
+
+In the above four-tile correlation plot, the displayed factors clockwise from the top left are: 1) Anxiety, 2) Hopelessness, 3) Resentment, 4) Shame.
 
 Lastly, we added a proportion of variance explained plot to show how well the factors account for the variance in the response data. From this figure, we can see that each factor explained additional and about equal variance.
 
@@ -382,6 +361,31 @@ ggplot(data.frame(Factor = 1:n_factors, CumulativeVariance = cum_var_explained),
     geom_line() + geom_point() +
     labs(x = "Factor", y = "Cumulative Variance Explained", title = 'Proportion of Variance Explained during Factor Analysis')
 ```
+
+```{r}
+#visualizing mean responses for each factor 
+
+mean_scores <- scale_data_long %>% 
+  group_by(item) %>% 
+  summarize(mean = mean(score))
+
+mean_scores %>% 
+  mutate(item = parse_number(item)) %>% 
+  mutate(factor = case_when(
+    item <= 25 ~ "Anxiety",
+    item > 25 & item <= 50 ~ "Hopelessness",
+    item > 50 & item <= 75 ~ "Resentment",
+    item > 75 ~ "Shame")) %>% 
+  ggplot(aes(x = item, y = mean)) +
+  geom_col(fill= "blue1") +
+  labs(y = "Mean Response (1-5)",
+       x = "Item",
+       title = "Mean Responses to Items by Factor") +
+  facet_wrap(~factor) +
+  theme_minimal() 
+```
+
+The above plot visualizes mean score for each item grouped by factor. This plot provides an assurance that each item is an appropriate measure by demonstrating a similarity in mean response for items across each factor. If there were a deviation from a uniform distribution in this plot, it would be an indication that (a) certain item(s) should not be used. This plot shows that, on average, individuals tended to agree a bit more with resentment-related statements and disagree a bit more with hopeless and shame-related statements.
 
 # Discussion
 
