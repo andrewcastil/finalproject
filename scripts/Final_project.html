@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,15 +17,14 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging-indent div.csl-entry {
+.hanging div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -39,7 +38,8 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}</style>
+}
+</style>
 
 
 <script src="Final_project_files/libs/clipboard/clipboard.min.js"></script>
@@ -78,7 +78,6 @@ div.csl-indent {
           </div>
   </div>
     
-  
     
   </div>
   
@@ -109,19 +108,25 @@ div.csl-indent {
 </section>
 <section id="hypotheses" class="level1">
 <h1>Hypotheses</h1>
-<p>We hypothesize there will be four distinct factors of imagination that emerge. Anxiety, defined by imagination that</p>
+<p>We hypothesize there will be four distinct factors of imagination that emerge. Anxiety, defined by imagination that incurs persistent worry, rumination, or stress; Hopelessness, where imagination which results in imagination about the future devoid of positive affect; Resentment, in which imagination produces externally oriented negative affect resulting in antisocial thoughts and behaviors; Shame, where imagination is a feature in negative perceptions of the self and persistent feelings on inadequacy.</p>
 </section>
-<section id="methods" class="level1">
-<h1>Methods</h1>
-<p>To prepare our data for analysis, we will need to simulate it. This will be achieved using rnorm() and round(). The four factors will be simulated separately in “blocks” of 25 items each and merged together. These blocks will have different, randomly selected means and standard deviations in order to allow the factor analysis to locate the desired clusters of items from each of the factors. A spattering of NAs will also be introduced using something like this: sample(1:n, 0.15nrow(data)ncol(data), replace = T) paired with a for loop. This will introduce some amount of missingness (in this case, 15%) to make the data more realistic and add a bit of intrigue and decision making around handling the missing data. After this, the data will be ready for analysis including imputation, removal of missing data, partitioning into holdouts, and more. In this stage, we will use mutate() and other tidyverse() functions per the project requirements.</p>
-<p>Data is simulated using a random sampling procedure. Four latent factors consisting of items rated 1 - 6 are produced using the sample() function and stored into a dataframe.</p>
+<section id="method" class="level1">
+<h1>Method</h1>
+<p>To prepare our data for analysis, we needed to simulate it. This was achieved using rnorm() and round(). The four factors were simulated separately in “blocks” of 25 items each and merged together. These blocks had different, randomly selected means and standard deviations in order to allow the factor analysis to locate the desired clusters of items from each of the factors. A spattering of NAs were introduced using something like this: sample(1:n, 0.15nrow(data)ncol(data), replace = T) paired with a for loop. This introduced some amount of missingness (in this case, 15%) to make the data more realistic and add a bit of intrigue and decision making around handling the missing data. After this process was completed, the data were ready for analysis including imputation, removal of missing data, partitioning into holdouts, and more. In this stage, we used mutate() and other tidyverse() functions per the project requirements.</p>
+<div class="cell">
+
+</div>
+<p>Data was simulated using a random sampling procedure. Four latent factors consisting of items rated 1 - 6 were produced using the sample() function and stored into a dataframe.</p>
+<div class="cell">
+
+</div>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
-<p>First, sample demographics and visualizations are provided below. As can be seen, the simulated sample is quite diverse in terms of number of countries , ages, and races represented, which is good for scale development.</p>
+<p>First, sample demographics and visualizations are provided below. As can be seen, the simulated sample was quite diverse in terms of number of countries, ages, and races represented, which is good for scale development.</p>
 <div class="cell">
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="table table-sm table-striped">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Gender</th>
@@ -144,7 +149,7 @@ div.csl-indent {
 </table>
 </div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="table table-sm table-striped">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Race</th>
@@ -176,7 +181,7 @@ div.csl-indent {
 </table>
 </div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="table table-sm table-striped">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Country</th>
@@ -228,29 +233,37 @@ div.csl-indent {
 </table>
 </div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="table table-sm table-striped">
 <thead>
 <tr class="header">
 <th style="text-align: right;">Average age of White Sample</th>
+<th style="text-align: right;">Standard Deviation</th>
+<th style="text-align: right;">N</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">31.31</td>
+<td style="text-align: right;">11.75</td>
+<td style="text-align: right;">7013</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="table table-sm table-striped">
 <thead>
 <tr class="header">
 <th style="text-align: right;">Average age of Non-White Sample</th>
+<th style="text-align: right;">Standard Deviation</th>
+<th style="text-align: right;">N</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">31.08</td>
+<td style="text-align: right;">11.39</td>
+<td style="text-align: right;">2987</td>
 </tr>
 </tbody>
 </table>
@@ -259,10 +272,10 @@ div.csl-indent {
 <p><img src="Final_project_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>We found four factors of imagination emerge from our analyses. The items clustered around four points, the four main factors: anxiety, hopelessness, resentment, and shame, suggesting that the items administered are measuring one of four types of maladaptive imagination. This is visualized below.</p>
+<p>We found four factors of imagination emerge from our analyses. The items clustered around four points, the four main factors: anxiety, hopelessness, resentment, and shame, suggesting that the items administered are measuring one of four types of maladaptive imagination. The descriptive statistics for the 100 items are provided below.</p>
 <div class="cell">
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="table table-sm table-striped">
 <caption>Descriptive Statistics of 100 Items</caption>
 <colgroup>
 <col style="width: 4%">
@@ -1903,8 +1916,11 @@ div.csl-indent {
 </table>
 </div>
 </div>
-<p>Cleaning the data involves the handling of missing values. 15% of the data is missing and there are no complete rows. In order to address this missingness, imptuation is used with the makeX() function from the glmnet() package.</p>
-<p>The data is visualized in multiple ways, including a correlation table, heatmap, and other plots.</p>
+<p>In order to do a proper factor analysis, we had to handle missingness in the data. 15% of the data was missing and there were no complete rows. In order to address this missingness, imptuation was used with the makeX() function from the glmnet() package.</p>
+<div class="cell">
+
+</div>
+<p>We visualized the data in multiple ways, including a correlation table, heatmap, and other plots. In the heatmap (first figure from the top, yellow), we can see that all the items seem to correlate with each other to some degree (multicolinearity). This is puzzling, since we would expect individual factors to emerge from the data. Therefore, we completed a series of other correlation plots (in blue) to show that we in fact have 4 unique clusters of items, each measuring a distinct aspect of maladaptive imagination.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="Final_project_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
@@ -1922,13 +1938,13 @@ div.csl-indent {
 <p><img src="Final_project_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The above plot visualizes mean score for each item grouped by factor. This plot provides an assurance that each item is an appropriate measure by demonstrating a similarity in mean response for items across each factor. If there were a deviation from a uniform distribution in this plot, it would be an indication that (a) certain item(s) should not be used. This plot shows that, on average, individuals tend to agree a bit more with resentment-related statements and disagree a bit more with hopeless and shame-related statements.</p>
+<p>The above plot visualizes mean score for each item grouped by factor. This plot provides an assurance that each item is an appropriate measure by demonstrating a similarity in mean response for items across each factor. If there were a deviation from a uniform distribution in this plot, it would be an indication that (a) certain item(s) should not be used. This plot shows that, on average, individuals tended to agree a bit more with resentment-related statements and disagree a bit more with hopeless and shame-related statements.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="Final_project_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Lastly, we add a proportion of variance explained plot to show how well the factors account for the variance in the response data. From this figure, we can see that each factor explains additional and about equal variance.</p>
+<p>Lastly, we added a proportion of variance explained plot to show how well the factors account for the variance in the response data. From this figure, we can see that each factor explained additional and about equal variance.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="Final_project_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
@@ -1950,65 +1966,65 @@ div.csl-indent {
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-abraham2016imaginative" class="csl-entry" role="listitem">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-abraham2016imaginative" class="csl-entry" role="doc-biblioentry">
 Abraham, Anna. 2016. <span>“The Imaginative Mind.”</span> <em>Human Brain Mapping</em> 37 (11): 4197–4211.
 </div>
-<div id="ref-andrews2021mapping" class="csl-entry" role="listitem">
+<div id="ref-andrews2021mapping" class="csl-entry" role="doc-biblioentry">
 Andrews-Hanna, Jessica R, and Matthew D Grilli. 2021. <span>“Mapping the Imaginative Mind: Charting New Paths Forward.”</span> <em>Current Directions in Psychological Science</em> 30 (1): 82–89.
 </div>
-<div id="ref-buckner2008brain" class="csl-entry" role="listitem">
+<div id="ref-buckner2008brain" class="csl-entry" role="doc-biblioentry">
 Buckner, Randy L, Jessica R Andrews-Hanna, and Daniel L Schacter. 2008. <span>“The Brain’s Default Network: Anatomy, Function, and Relevance to Disease.”</span> <em>Annals of the New York Academy of Sciences</em> 1124 (1): 1–38.
 </div>
-<div id="ref-castillo2023pathology" class="csl-entry" role="listitem">
+<div id="ref-castillo2023pathology" class="csl-entry" role="doc-biblioentry">
 Castillo, Andrew J, and David M Condon. 2023. <span>“The Pathology of Imagination: Picturing the Worst.”</span>
 </div>
-<div id="ref-crespi2020psychiatry" class="csl-entry" role="listitem">
+<div id="ref-crespi2020psychiatry" class="csl-entry" role="doc-biblioentry">
 Crespi, Bernard J. 2020. <span>“The Psychiatry of Imagination.”</span>
 </div>
-<div id="ref-feng2017cross" class="csl-entry" role="listitem">
+<div id="ref-feng2017cross" class="csl-entry" role="doc-biblioentry">
 Feng, Zhe, Shelby Logan, Gerald Cupchik, Ute Ritterfeld, and Dennis Gaffin. 2017. <span>“A Cross-Cultural Exploration of Imagination as a Process-Based Concept.”</span> <em>Imagination, Cognition and Personality</em> 37 (1): 69–94.
 </div>
-<div id="ref-gotlib2010cognition" class="csl-entry" role="listitem">
+<div id="ref-gotlib2010cognition" class="csl-entry" role="doc-biblioentry">
 Gotlib, Ian H, and Jutta Joormann. 2010. <span>“Cognition and Depression: Current Status and Future Directions.”</span> <em>Annual Review of Clinical Psychology</em> 6: 285–312.
 </div>
-<div id="ref-gotlieb2019imagination" class="csl-entry" role="listitem">
+<div id="ref-gotlieb2019imagination" class="csl-entry" role="doc-biblioentry">
 Gotlieb, Rebecca JM, Elizabeth Hyde, Mary H Immordino-Yang, and Scott B Kaufman. 2019. <span>“Imagination Is the Seed of Creativity.”</span> <em>The Cambridge Handbook of Creativity</em> 2: 709–31.
 </div>
-<div id="ref-gough1979creative" class="csl-entry" role="listitem">
+<div id="ref-gough1979creative" class="csl-entry" role="doc-biblioentry">
 Gough, Harrison G. 1979. <span>“A Creative Personality Scale for the Adjective Check List.”</span> <em>Journal of Personality and Social Psychology</em> 37 (8): 1398.
 </div>
-<div id="ref-kay2022taking" class="csl-entry" role="listitem">
+<div id="ref-kay2022taking" class="csl-entry" role="doc-biblioentry">
 Kay, Cameron S, and Holly Arrow. 2022. <span>“Taking an Elemental Approach to the Conceptualization and Measurement of Machiavellianism, Narcissism, and Psychopathy.”</span> <em>Social and Personality Psychology Compass</em> 16 (4): e12662.
 </div>
-<div id="ref-malchiodi2011handbook" class="csl-entry" role="listitem">
+<div id="ref-malchiodi2011handbook" class="csl-entry" role="doc-biblioentry">
 Malchiodi, Cathy A. 2011. <em>Handbook of Art Therapy</em>. Guilford Press.
 </div>
-<div id="ref-markman2012handbook" class="csl-entry" role="listitem">
+<div id="ref-markman2012handbook" class="csl-entry" role="doc-biblioentry">
 Markman, Keith D, William MP Klein, and Julie A Suhr. 2012. <em>Handbook of Imagination and Mental Simulation</em>. Psychology Press.
 </div>
-<div id="ref-mullally2014memory" class="csl-entry" role="listitem">
+<div id="ref-mullally2014memory" class="csl-entry" role="doc-biblioentry">
 Mullally, Sinéad L, and Eleanor A Maguire. 2014. <span>“Memory, Imagination, and Predicting the Future: A Common Brain Mechanism?”</span> <em>The Neuroscientist</em> 20 (3): 220–34.
 </div>
-<div id="ref-rasmussen2022anomalies" class="csl-entry" role="listitem">
+<div id="ref-rasmussen2022anomalies" class="csl-entry" role="doc-biblioentry">
 Rasmussen, Andreas Rosén, Andrea Raballo, Antonio Preti, Ditte Sæbye, and Josef Parnas. 2022. <span>“Anomalies of Imagination, Self-Disorders, and Schizophrenia Spectrum Psychopathology: A Network Analysis.”</span> <em>Frontiers in Psychiatry</em> 12: 808009.
 </div>
-<div id="ref-Sass:01d" class="csl-entry" role="listitem">
+<div id="ref-Sass:01d" class="csl-entry" role="doc-biblioentry">
 Sass, Louis A, and David Schuldberg. 2011. <span>“Introduction to the Special Issue: Creativity and the Schizophrenic Spectrum.”</span> <em>Creativity Research Journal</em> 13 (1): 1–4.
 </div>
-<div id="ref-singer1963factor" class="csl-entry" role="listitem">
+<div id="ref-singer1963factor" class="csl-entry" role="doc-biblioentry">
 Singer, Jerome L, and John S Antrobus. 1963. <span>“A Factor-Analytic Study of Daydreaming and Conceptually-Related Cognitive and Personality Variables.”</span> <em>Perceptual and Motor Skills</em> 17 (1): 187–209.
 </div>
-<div id="ref-somer2002maladaptive" class="csl-entry" role="listitem">
+<div id="ref-somer2002maladaptive" class="csl-entry" role="doc-biblioentry">
 Somer, Eli. 2002. <span>“Maladaptive Daydreaming: A Qualitative Inquiry.”</span> <em>Journal of Contemporary Psychotherapy</em> 32: 197–212.
 </div>
-<div id="ref-torrance1966torrance" class="csl-entry" role="listitem">
+<div id="ref-torrance1966torrance" class="csl-entry" role="doc-biblioentry">
 Torrance, E Paul. 1966. <span>“Torrance Tests of Creative Thinking.”</span> <em>Educational and Psychological Measurement</em>.
 </div>
-<div id="ref-wu2015episodic" class="csl-entry" role="listitem">
+<div id="ref-wu2015episodic" class="csl-entry" role="doc-biblioentry">
 Wu, Jade Q, Karl K Szpunar, Sheina A Godovich, Daniel L Schacter, and Stefan G Hofmann. 2015. <span>“Episodic Future Thinking in Generalized Anxiety Disorder.”</span> <em>Journal of Anxiety Disorders</em> 36: 1–8.
 </div>
-<div id="ref-Zabelina:2020" class="csl-entry" role="listitem">
+<div id="ref-Zabelina:2020" class="csl-entry" role="doc-biblioentry">
 Zabelina, Darya L, and David M Condon. 2020. <span>“The Four-Factor Imagination Scale (FFIS): A Measure for Assessing Frequency, Complexity, Emotional Valence, and Directedness of Imagination.”</span> <em>Psychological Research</em> 84 (8): 2287–99. https://doi.org/<a href="https://doi.org/10.1007/s00426-019-01227-w">https://doi.org/10.1007/s00426-019-01227-w</a>.
 </div>
 </div></section></div></main>
@@ -2040,23 +2056,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -2068,24 +2070,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
     setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -2121,128 +2106,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
       });
-    }
+      return popup.innerHTML;
+    });
   }
 });
 </script>

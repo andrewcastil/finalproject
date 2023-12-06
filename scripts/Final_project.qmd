@@ -36,11 +36,11 @@ Examining this relationship will clarify the extent to which imagination can pro
 
 # Hypotheses
 
-We hypothesize there will be four distinct factors of imagination that emerge. Anxiety, defined by imagination that
+We hypothesize there will be four distinct factors of imagination that emerge. Anxiety, defined by imagination that incurs persistent worry, rumination, or stress; Hopelessness, where imagination which results in imagination about the future devoid of positive affect; Resentment, in which imagination produces externally oriented negative affect resulting in antisocial thoughts and behaviors; Shame, where imagination is a feature in negative perceptions of the self and persistent feelings on inadequacy.
 
-# Methods
+# Method
 
-To prepare our data for analysis, we will need to simulate it. This will be achieved using rnorm() and round(). The four factors will be simulated separately in "blocks" of 25 items each and merged together. These blocks will have different, randomly selected means and standard deviations in order to allow the factor analysis to locate the desired clusters of items from each of the factors. A spattering of NAs will also be introduced using something like this: sample(1:n, 0.15nrow(data)ncol(data), replace = T) paired with a for loop. This will introduce some amount of missingness (in this case, 15%) to make the data more realistic and add a bit of intrigue and decision making around handling the missing data. After this, the data will be ready for analysis including imputation, removal of missing data, partitioning into holdouts, and more. In this stage, we will use mutate() and other tidyverse() functions per the project requirements.
+To prepare our data for analysis, we needed to simulate it. This was achieved using rnorm() and round(). The four factors were simulated separately in "blocks" of 25 items each and merged together. These blocks had different, randomly selected means and standard deviations in order to allow the factor analysis to locate the desired clusters of items from each of the factors. A spattering of NAs were introduced using something like this: sample(1:n, 0.15nrow(data)ncol(data), replace = T) paired with a for loop. This introduced some amount of missingness (in this case, 15%) to make the data more realistic and add a bit of intrigue and decision making around handling the missing data. After this process was completed, the data were ready for analysis including imputation, removal of missing data, partitioning into holdouts, and more. In this stage, we used mutate() and other tidyverse() functions per the project requirements.
 
 ```{r}
 suppressMessages(suppressWarnings(library(rio)))
@@ -58,7 +58,7 @@ suppressMessages(suppressWarnings(library(reshape2)))
 suppressMessages(suppressWarnings(library(knitr)))
 ```
 
-Data is simulated using a random sampling procedure. Four latent factors consisting of items rated 1 - 6 are produced using the sample() function and stored into a dataframe.
+Data was simulated using a random sampling procedure. Four latent factors consisting of items rated 1 - 6 were produced using the sample() function and stored into a dataframe.
 
 ```{r}
 set.seed(1234)
@@ -131,18 +131,19 @@ write.csv(scale_data, here(file_path <- here("data", "scale_data.csv"))) #Saving
 
 # Results
 
-First, sample demographics and visualizations are provided below. As can be seen, the simulated sample is quite diverse in terms of number of countries , ages, and races represented, which is good for scale development.
+First, sample demographics and visualizations are provided below. As can be seen, the simulated sample was quite diverse in terms of number of countries, ages, and races represented, which is good for scale development.
 
 ```{r}
 #comparing age demographics for white and non-white races
 
 age1 <- scale_data %>%
 filter(race == "White") %>%
-summarize(mean(age))
+summarize(age_mean = mean(age), sd = sd(age), total = n()) 
+
 
 age2 <- scale_data %>%
 filter(race != "White") %>%
-summarize(mean(age))
+summarize(age_mean= mean(age), sd = sd(age), total = n())
 
 break_down<- scale_data %>%
   group_by(gender, race, country) %>%
@@ -174,10 +175,10 @@ race %>%
   kable(col.names= c("Country", "Number of Participants")) 
  
  age1 %>%
-   kable(col.names= "Average age of White Sample", digits = 2)
+   kable(col.names= c("Average age of White Sample", "Standard Deviation", "N"), digits = 2)
  
  age2 %>%
-   kable(col.names= "Average age of Non-White Sample", digits= 2)
+   kable(col.names= c("Average age of Non-White Sample", "Standard Deviation", "N"), digits= 2)
  
  #visualizing demographics
 
@@ -194,7 +195,7 @@ break_down %>%
   )
 ```
 
-We found four factors of imagination emerge from our analyses. The items clustered around four points, the four main factors: anxiety, hopelessness, resentment, and shame, suggesting that the items administered are measuring one of four types of maladaptive imagination. This is visualized below.
+We found four factors of imagination emerge from our analyses. The items clustered around four points, the four main factors: anxiety, hopelessness, resentment, and shame, suggesting that the items administered are measuring one of four types of maladaptive imagination. The descriptive statistics for the 100 items are provided below.
 
 ```{r}
 #Descriptives of the 100 items
@@ -221,7 +222,7 @@ descScaleItems %>% kable(
 
 ```
 
-Cleaning the data involves the handling of missing values. 15% of the data is missing and there are no complete rows. In order to address this missingness, imptuation is used with the makeX() function from the glmnet() package.
+In order to do a proper factor analysis, we had to handle missingness in the data. 15% of the data was missing and there were no complete rows. In order to address this missingness, imptuation was used with the makeX() function from the glmnet() package.
 
 ```{r}
 #Handling NAs by replacing with mean of column 
@@ -264,7 +265,7 @@ factor_4 <- scale_data[,c(1:5, 81:105)]
 
 ```
 
-The data is visualized in multiple ways, including a correlation table, heatmap, and other plots.
+We visualized the data in multiple ways, including a correlation table, heatmap, and other plots. In the heatmap (first figure from the top, yellow), we can see that all the items seem to correlate with each other to some degree (multicolinearity). This is puzzling, since we would expect individual factors to emerge from the data. Therefore, we completed a series of other correlation plots (in blue) to show that we in fact have 4 unique clusters of items, each measuring a distinct aspect of maladaptive imagination.
 
 ```{r}
 
@@ -337,7 +338,7 @@ mean_scores %>%
   theme_minimal() 
 ```
 
-The above plot visualizes mean score for each item grouped by factor. This plot provides an assurance that each item is an appropriate measure by demonstrating a similarity in mean response for items across each factor. If there were a deviation from a uniform distribution in this plot, it would be an indication that (a) certain item(s) should not be used. This plot shows that, on average, individuals tend to agree a bit more with resentment-related statements and disagree a bit more with hopeless and shame-related statements.
+The above plot visualizes mean score for each item grouped by factor. This plot provides an assurance that each item is an appropriate measure by demonstrating a similarity in mean response for items across each factor. If there were a deviation from a uniform distribution in this plot, it would be an indication that (a) certain item(s) should not be used. This plot shows that, on average, individuals tended to agree a bit more with resentment-related statements and disagree a bit more with hopeless and shame-related statements.
 
 ```{r}
 #factor analysis
@@ -373,7 +374,7 @@ factor_plot <- corrplot(redoneItems, method = "color",
          tl.cex = 1)
 ```
 
-Lastly, we add a proportion of variance explained plot to show how well the factors account for the variance in the response data. From this figure, we can see that each factor explains additional and about equal variance.
+Lastly, we added a proportion of variance explained plot to show how well the factors account for the variance in the response data. From this figure, we can see that each factor explained additional and about equal variance.
 
 ```{r}
 #Plot
